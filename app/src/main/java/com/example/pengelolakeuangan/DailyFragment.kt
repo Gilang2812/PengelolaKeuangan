@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.pengelolakeuangan.placeholder.PlaceholderContent
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
  * A fragment representing a list of Items.
@@ -30,5 +31,24 @@ class DailyFragment : Fragment() {
         }
         return view
     }
+
+    //    val bottomNavigationView: BottomNavigationView = findViewById(R.id.top_navigation)
+    //
+    //    bottomNavigationView.setOnItemSelectedListener { item ->
+    //        when (item.itemId) {
+    //            R.id.transaction -> {
+    //                replaceFragment(DailyFragment())
+    //                return@setOnItemSelectedListener true
+    //            }
+    //            R.id.bugdet -> {
+    //                replaceFragment(MonthlyFragment())
+    //                return@setOnItemSelectedListener true
+    //            }
+    //            else -> false
+    //        }
+    //    }
+    //
+    //
+    //    replaceFragment(DailyFragment())
 
 }

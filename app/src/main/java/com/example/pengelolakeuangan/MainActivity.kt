@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.transaction -> {
-                    replaceFragment(DailyFragment())
+                    replaceFragment(TransactionFragment())
                     return@setOnItemSelectedListener true
                 }
                 R.id.bugdet -> {
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        replaceFragment(DailyFragment())
+        replaceFragment(TransactionFragment())
     }
 
     private fun replaceFragment(fragment: Fragment) {
