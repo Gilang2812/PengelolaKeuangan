@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Pengelola Keuangan</string>
+    <string name="gilang_hebat">Gilang hebat</string>
+    <string name="naruto_1">naruto 1</string>
+    <string name="text_2">sasuke 2</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">close</string>
+</resources>

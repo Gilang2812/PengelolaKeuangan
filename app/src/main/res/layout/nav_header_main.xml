@@ -1,0 +1,13 @@
+<!-- res/layout/nav_header_main.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:gravity="bottom"
+    android:background="?attr/colorPrimary">
+
+    <!-- Your header content goes here -->
+
+</LinearLayout>

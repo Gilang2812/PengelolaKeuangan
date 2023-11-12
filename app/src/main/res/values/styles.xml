@@ -1,0 +1,9 @@
+<!-- res/values/styles.xml -->
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    </style>
+    <style name="NavMenuItemStyle">
+        <item name="android:tint">@color/red</item>
+    </style>
+</resources>

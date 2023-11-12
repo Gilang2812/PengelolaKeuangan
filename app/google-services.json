@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1012899370149",
+    "project_id": "pengelolakeuangan-51c27",
+    "storage_bucket": "pengelolakeuangan-51c27.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012899370149:android:ea18f17112cf7c3bd8694c",
+        "android_client_info": {
+          "package_name": "com.example.pengelolakeuangan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUBj5asvB6KfFzOO-ywST78BUzJgMq0Yo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
