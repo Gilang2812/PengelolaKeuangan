@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/daily"
-        android:title="Item 1"
+        android:title="Daily"
         android:icon="@drawable/ic_item1" />
 
     <item
         android:id="@+id/monthly"
-        android:title="Item 2"
+        android:title="Monthly"
         android:icon="@drawable/ic_item2" />
 </menu>

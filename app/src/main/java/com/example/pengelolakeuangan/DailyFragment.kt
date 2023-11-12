@@ -32,23 +32,6 @@ class DailyFragment : Fragment() {
         return view
     }
 
-    //    val bottomNavigationView: BottomNavigationView = findViewById(R.id.top_navigation)
-    //
-    //    bottomNavigationView.setOnItemSelectedListener { item ->
-    //        when (item.itemId) {
-    //            R.id.transaction -> {
-    //                replaceFragment(DailyFragment())
-    //                return@setOnItemSelectedListener true
-    //            }
-    //            R.id.bugdet -> {
-    //                replaceFragment(MonthlyFragment())
-    //                return@setOnItemSelectedListener true
-    //            }
-    //            else -> false
-    //        }
-    //    }
-    //
-    //
-    //    replaceFragment(DailyFragment())
+
 
 }
