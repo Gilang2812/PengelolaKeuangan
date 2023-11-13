@@ -13,6 +13,11 @@
         android:theme="@style/Theme.PengelolaKeuangan"
         tools:targetApi="31">
         <activity
+            android:name=".Anggaran"
+            android:exported="true"
+            android:label="@string/title_activity_anggaran"
+            android:theme="@style/Theme.PengelolaKeuangan" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

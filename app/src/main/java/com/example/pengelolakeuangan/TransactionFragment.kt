@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private const val ARG_PARAM1 = "param1"
@@ -27,34 +28,28 @@ class TransactionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_transaction, container, false)
 
-        // Get the BottomNavigationView from the parent activity
-        val bottomNavigationView: BottomNavigationView = activity?.findViewById(R.id.top_navigation)!!
+        val bottomNavigationView: BottomNavigationView = view.findViewById(R.id.top_navigation)!!
 
-        // Set the item selection listener
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.transaction -> {
-                    // Check if the current fragment is not already DailyFragment
+                R.id.daily -> {
                     if (childFragmentManager.findFragmentById(R.id.transaction_container) !is DailyFragment) {
                         replaceFragment(DailyFragment())
                     }
-                    return@setOnNavigationItemSelectedListener true
+                    return@setOnItemSelectedListener true
                 }
                 R.id.monthly -> {
-                    // Check if the current fragment is not already MonthlyFragment
                     if (childFragmentManager.findFragmentById(R.id.transaction_container) !is MonthlyFragment) {
                         replaceFragment(MonthlyFragment())
                     }
-                    return@setOnNavigationItemSelectedListener true
+                    return@setOnItemSelectedListener true
                 }
                 else -> false
             }
         }
 
-        // Set default fragment
         if (childFragmentManager.findFragmentById(R.id.transaction_container) == null) {
             replaceFragment(DailyFragment())
         }
@@ -63,19 +58,10 @@ class TransactionFragment : Fragment() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        childFragmentManager.beginTransaction()
-            .replace(R.id.transaction_container, fragment)
-            .commit()
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TransactionFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        try {
+            childFragmentManager.beginTransaction().replace(R.id.transaction_container, fragment).commit()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

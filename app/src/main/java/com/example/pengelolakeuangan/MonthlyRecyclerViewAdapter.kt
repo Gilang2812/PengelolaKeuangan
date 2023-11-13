@@ -38,8 +38,8 @@ class MonthlyRecyclerViewAdapter(
 
     inner class ViewHolder(binding: FragmentMonthlyBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
+        val idView: TextView = binding.dateFilter
+        val contentView: TextView = binding.listpem
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"

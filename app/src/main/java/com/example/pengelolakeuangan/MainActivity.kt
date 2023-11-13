@@ -15,11 +15,11 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.transaction -> {
-                    replaceFragment(MonthlyFragment())
+                    replaceFragment(TransactionFragment())
                     return@setOnItemSelectedListener true
                 }
                 R.id.bugdet -> {
-                    replaceFragment(TransactionFragment())
+                    replaceFragment(MonthlyFragment())
                     return@setOnItemSelectedListener true
                 }
                 else -> false
