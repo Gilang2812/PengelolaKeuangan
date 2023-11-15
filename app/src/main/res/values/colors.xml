@@ -3,5 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
-    <color name="blue">#0000FF</color>
+    <color name="blue">#0000F8</color>
+    <color name="gray">#E4E0E0</color>
+    <color name="color_pemasukan_tex">#8C8C8C</color>
+    <color name="color_pemasukan_number">#38B000</color>
+    #38B000
 </resources>

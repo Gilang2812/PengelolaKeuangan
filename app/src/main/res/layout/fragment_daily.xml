@@ -47,7 +47,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/listName"
             android:text="pemasukan"
-            android:textColor="#38B000"
+            android:textColor="@color/color_pemasukan_number"
             android:textSize="14sp"
             android:textStyle="normal"
             android:fontFamily="@font/poppinsmedium"

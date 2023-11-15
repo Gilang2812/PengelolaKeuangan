@@ -22,12 +22,13 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(MonthlyFragment())
                     return@setOnItemSelectedListener true
                 }
+
                 else -> false
             }
         }
 
 
-        replaceFragment(MonthlyFragment())
+        replaceFragment(TransactionFragment())
     }
 
     private fun replaceFragment(fragment: Fragment) {
