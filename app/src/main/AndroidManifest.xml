@@ -16,6 +16,15 @@
             android:name=".EditPemasukanAcitivity"
             android:exported="false" />
         <activity
+            android:name=".ExpensescategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".IncomecategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity_kategori"
+            android:exported="false" />
+        <activity
             android:name=".PemasukanActivity"
             android:exported="false" />
         <activity
