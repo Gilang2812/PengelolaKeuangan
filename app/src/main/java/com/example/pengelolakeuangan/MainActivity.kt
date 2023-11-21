@@ -22,6 +22,10 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(MonthlyFragment())
                     return@setOnItemSelectedListener true
                 }
+                R.id.more -> {
+                    replaceFragment(MoreFragment())
+                    return@setOnItemSelectedListener true
+                }
 
                 else -> false
             }

@@ -12,7 +12,7 @@
     <item
         android:id="@+id/more"
         android:title="More"
-        android:icon="@drawable/ic_item1" />
+        android:icon="@drawable/more" />
     <item
         android:id="@+id/history"
         android:title="profile"
