@@ -39,7 +39,5 @@
                 android:layout_marginTop="15dp"/>
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <include
-            layout="@layout/content_edit_pemasukan"/>
-    </com.google.android.material.appbar.AppBarLayout>
+      </com.google.android.material.appbar.AppBarLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
