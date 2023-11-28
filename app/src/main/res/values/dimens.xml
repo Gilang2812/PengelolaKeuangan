@@ -3,4 +3,6 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin_pemasukan">20dp</dimen>
+    <dimen name="padding_input">10dp</dimen>
+    <dimen name="input_height">52dp</dimen>
 </resources>

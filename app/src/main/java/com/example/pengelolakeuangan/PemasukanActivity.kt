@@ -7,6 +7,8 @@ import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.TimePicker
@@ -16,6 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.*
 import java.util.Locale
+
 
 class PemasukanActivity : AppCompatActivity() {
 
@@ -73,21 +76,21 @@ class PemasukanActivity : AppCompatActivity() {
         datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
         datePickerDialog.show()
     }
+
     fun showListKategori(view: android.view.View) {
-        val items = arrayOf("Item 1", "Item 2", "Item 3") // Gantilah dengan item sesuai kebutuhan Anda
+        val inputKategori: AutoCompleteTextView = findViewById(R.id.input_kategori)
 
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Pilih Item")
-            .setItems(items) { dialog, which ->
-                val selectedItem = items[which]
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, kategoriItems)
+        inputKategori.setAdapter(adapter)
 
-                val textViewItem = findViewById<TextView>(R.id.textViewItem)
-                textViewItem.text = selectedItem
-            }
+        inputKategori.setOnItemClickListener { _, _, position, _ ->
+            val selectedKategori = adapter.getItem(position)
+            inputKategori.setText(selectedKategori)
+        }
 
-        val dialog = builder.create()
-        dialog.show()
+        inputKategori.showDropDown()
     }
+
 
     fun showListAset(view: android.view.View) {
         val inputAset: TextInputEditText = findViewById(R.id.input_aset)
