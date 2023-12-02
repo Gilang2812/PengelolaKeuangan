@@ -1,5 +1,6 @@
 package com.example.pengelolakeuangan
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -12,12 +13,13 @@ class MainViewModel : ViewModel() {
 
     val usersState: State<MoneyState> = _userState
 
-    private fun fetchUsers(){
+    internal fun fetchUsers(){
         viewModelScope.launch {
             try {
                 val response = MoneyService.getUser()
+                Log.d("RESPONSE", response.toString())
                 _userState.value = _userState.value.copy(
-                    list = response.user,
+                    list = response,
                     loading = false,
                     error = null
 

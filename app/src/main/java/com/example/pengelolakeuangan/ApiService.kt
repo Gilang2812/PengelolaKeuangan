@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 private val retrofit  = Retrofit.Builder()
-    .baseUrl("http:localhost:3000/")
+    .baseUrl("http://10.0.2.2:3000/")
     .addConverterFactory(GsonConverterFactory.create())
     .build()
 
@@ -13,13 +13,16 @@ private val retrofit  = Retrofit.Builder()
 
 interface ApiService {
     @GET("user") // Ganti dengan endpoint yang benar
-    suspend fun getUser(): UserResponse
+    suspend fun getUser(): List<User>
 
     data class User(
-        val id_user:String,
-        val nama :String,
-        val email : String,
-        val password : String
+        val id_user: String,
+        val id_daerah: String,
+        val nama: String,
+        val email: String,
+        val password: String,
+        val created_at: String,
+        val updated_at: String
     )
 
     data class UserResponse(val user  : List<User>)

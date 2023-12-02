@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <!-- Optional: Add certificates or certificate authorities (CA) here -->
+            <!-- For example, to trust a self-signed certificate for development purposes -->
+            <!-- <certificates src="@raw/self_signed_cert"/> -->
+        </trust-anchors>
+    </base-config>
+</network-security-config>
