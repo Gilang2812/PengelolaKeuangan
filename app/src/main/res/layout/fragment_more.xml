@@ -6,6 +6,20 @@
     tools:context=".MoreFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/headermore"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="@string/title_more"
+            android:textSize="24sp"
+            android:layout_marginTop="15dp"/>
+    </com.google.android.material.appbar.MaterialToolbar>
+
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
@@ -15,6 +29,7 @@
         android:paddingEnd="30dp"
         android:paddingBottom="10dp"
         android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"/>
+        android:dividerHeight="1dp"
+        android:layout_below="@id/headermore"/>
 
 </RelativeLayout>

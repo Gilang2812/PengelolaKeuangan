@@ -63,5 +63,10 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="slogan">Mengatur Keuangan Anda, Membangun Masa Depan Anda</string>
+<<<<<<< HEAD
     <string name="tambah_catatan_baru">Tambah Catatan Baru</string>
+=======
+    <string name="title_more">More</string>
+    <string name="delete">delete</string>
+>>>>>>> ga-error
 </resources>

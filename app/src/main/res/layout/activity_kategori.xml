@@ -1,10 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity_kategori">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/headercategory"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/edit_pemasukan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back"
+            android:onClick="onBackPressed"
+            android:outlineAmbientShadowColor="@color/black"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            tools:ignore="TouchTargetSizeCheck,ImageContrastCheck" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="@string/title_pemasukan"
+            android:textSize="24sp"
+            android:layout_marginTop="15dp"/>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <ListView
         android:id="@+id/listView_kategori"
@@ -15,6 +41,7 @@
         android:paddingEnd="30dp"
         android:paddingBottom="10dp"
         android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"/>
+        android:dividerHeight="1dp"
+        android:layout_below="@id/headercategory"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
