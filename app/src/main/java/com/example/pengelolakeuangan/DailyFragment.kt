@@ -31,9 +31,9 @@ class DailyFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                val response = MoneyService.getUser()
-                val userList = response
-                val adapter = UserAdapter(userList)
+                val response = MoneyService.getTransaksi()
+                val transaksiList = response
+                val adapter = UserAdapter(transaksiList)
                 recyclerView.adapter = adapter
             } catch (e: Exception) {
                 Log.e("DailyFragment", "Error fetching users: ${e.message}", e)
@@ -76,7 +76,7 @@ class DailyFragment : Fragment() {
     }
 }
 
-class UserAdapter(private val userList: List<ApiService.User>) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class UserAdapter(private val transaksiList: List<ApiService.Transaksi>) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_daily, parent, false)
@@ -84,17 +84,17 @@ class UserAdapter(private val userList: List<ApiService.User>) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val user = userList[position]
-        holder.bind(user)
+        val transaksi = transaksiList[position]
+        holder.bind(transaksi)
     }
 
     override fun getItemCount(): Int {
-        return userList.size
+        return transaksiList.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(user: ApiService.User) {
-            itemView.findViewById<TextView>(R.id.listpem).text = user.nama
+        fun bind(transaksi: ApiService.Transaksi) {
+            itemView.findViewById<TextView>(R.id.listpeng).text = transaksi.jumlah.toString()
         }
     }
 }

@@ -3,6 +3,7 @@ package com.example.pengelolakeuangan
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import java.util.Date
 
 private val retrofit  = Retrofit.Builder()
     .baseUrl("https://cash-flow-mate.et.r.appspot.com/")
@@ -15,6 +16,9 @@ interface ApiService {
     @GET("user") // Ganti dengan endpoint yang benar
     suspend fun getUser(): List<User>
 
+    @GET("transaksi")
+    suspend fun getTransaksi():List<Transaksi>
+
     data class User(
         val id_user: String,
         val id_daerah: String,
@@ -24,6 +28,19 @@ interface ApiService {
         val created_at: String,
         val updated_at: String
     )
+    data class Transaksi(
+        val id_transaksi: String,
+        val id_user: String,
+        val id_kategori: String,
+        val id_jenis: String,
+        val id_aset: String,
+        val tanggal: Date,
+        val jumlah: Int,
+        val note: String,
+        val created_at: Date,
+        val updated_at: Date
+    )
 
-    data class UserResponse(val user  : List<User>)
+
+
 }

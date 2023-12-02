@@ -64,7 +64,10 @@
     </string>
     <string name="slogan">Mengatur Keuangan Anda, Membangun Masa Depan Anda</string>
     <string name="tambah_catatan_baru">Tambah Catatan Baru</string>
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     <string name="title_more">More</string>
     <string name="delete">delete</string>
->>>>>>> ga-error
 </resources>
