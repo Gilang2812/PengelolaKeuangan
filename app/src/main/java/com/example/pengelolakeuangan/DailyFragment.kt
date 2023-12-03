@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -20,7 +19,6 @@ class DailyFragment : Fragment() {
 
     private lateinit var fab: FloatingActionButton
     private lateinit var recyclerView: RecyclerView
-    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,10 +31,10 @@ class DailyFragment : Fragment() {
             try {
                 val response = MoneyService.getTransaksi()
                 val transaksiList = response
-                val adapter = UserAdapter(transaksiList)
+                val adapter = TransaksiAdapter(transaksiList)
                 recyclerView.adapter = adapter
             } catch (e: Exception) {
-                Log.e("DailyFragment", "Error fetching users: ${e.message}", e)
+                Log.e("DailyFragment", "Error fetching transaksis: ${e.message}", e)
                 Snackbar.make(requireView(), "Error di daily fragment: ${e.message}", Snackbar.LENGTH_SHORT).show()
             }
         }
@@ -57,7 +55,7 @@ class DailyFragment : Fragment() {
                     Snackbar.make(requireView(), "pemasukan clicked", Snackbar.LENGTH_SHORT).show()
                     lifecycleScope.launch(Dispatchers.Main) {
                         try {
-                            // Gunakan objek user sesuai kebutuhan
+
                         } catch (e: Exception) {
                             Snackbar.make(requireView(), "Error: ${e.message}", Snackbar.LENGTH_SHORT).show()
                         }
@@ -76,7 +74,7 @@ class DailyFragment : Fragment() {
     }
 }
 
-class UserAdapter(private val transaksiList: List<ApiService.Transaksi>) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class TransaksiAdapter(private val transaksiList: List<ApiService.Transaksi>) : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_daily, parent, false)
