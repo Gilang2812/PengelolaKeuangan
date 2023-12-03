@@ -1,8 +1,11 @@
 package com.example.pengelolakeuangan
 
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import java.util.Date
 
 private val retrofit  = Retrofit.Builder()
@@ -19,12 +22,24 @@ interface ApiService {
     @GET("transaksi")
     suspend fun getTransaksi():List<Transaksi>
 
+    suspend fun getDaerah():List<Daerah>
+
+    @POST("users")
+    suspend fun createUser(@Body user: User): Response<User>
+
     data class User(
         val id_user: String,
         val id_daerah: String,
         val nama: String,
         val email: String,
         val password: String,
+        val created_at: String,
+        val updated_at: String
+    )
+    data class Daerah (
+        val id_daerah: String,
+        val nama: String,
+        val umr :Int,
         val created_at: String,
         val updated_at: String
     )

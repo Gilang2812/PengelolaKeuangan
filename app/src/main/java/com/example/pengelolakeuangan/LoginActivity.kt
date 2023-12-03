@@ -6,15 +6,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.pengelolakeuangan.databinding.ActivityLoginBinding
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var daerahAdapter: ArrayAdapter<ApiService.Daerah>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -38,24 +37,28 @@ class LoginActivity : AppCompatActivity() {
         val emailEdit = view.findViewById<EditText>(R.id.emailEdit)
         val passwordEdit = view.findViewById<EditText>(R.id.passwordEdit)
 
-        // Define the options for the Spinner
-        val options = arrayOf("Option 1", "Option 2", "Option 3")
+        daerahAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf())
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, options)
+        daerahAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = daerahAdapter
 
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        // Apply the adapter to the spinner
-        spinner.adapter = adapter
         signupBtn.setOnClickListener {
             val map = HashMap<String, String>()
             map["name"] = nameEdit.text.toString()
             map["email"] = emailEdit.text.toString()
             map["password"] = passwordEdit.text.toString()
 
-            // Tambahkan logika untuk memproses data signup di sini
+            lifecycleScope.launch {
+                try {
+                    val daerahList = MoneyService.getDaerah()
+                    daerahAdapter.clear()
+                    daerahAdapter.addAll(daerahList)
+                    daerahAdapter.notifyDataSetChanged()
+                } catch (e: Exception) {
+                    // Handle the error
+                    e.printStackTrace()
+                }
+            }
         }
     }
 
