@@ -22,6 +22,7 @@ interface ApiService {
     @GET("transaksi")
     suspend fun getTransaksi():List<Transaksi>
 
+    @GET("daerah")
     suspend fun getDaerah():List<Daerah>
 
     @POST("users")
@@ -38,7 +39,7 @@ interface ApiService {
     )
     data class Daerah (
         val id_daerah: String,
-        val nama: String,
+        val nama_daerah: String,
         val umr :Int,
         val created_at: String,
         val updated_at: String
