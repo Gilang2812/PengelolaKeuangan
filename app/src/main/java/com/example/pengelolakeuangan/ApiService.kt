@@ -3,7 +3,8 @@ package com.example.pengelolakeuangan
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import java.util.Date
@@ -16,6 +17,16 @@ private val retrofit  = Retrofit.Builder()
     val MoneyService = retrofit.create(ApiService::class.java)
 
 interface ApiService {
+    @FormUrlEncoded
+
+    @POST("user")
+    suspend fun createUser(
+        @Field("id_daerah") id_daerah: String,
+        @Field("nama") nama: String,
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Response<User>
+
     @GET("user") // Ganti dengan endpoint yang benar
     suspend fun getUser(): List<User>
 
@@ -24,9 +35,6 @@ interface ApiService {
 
     @GET("daerah")
     suspend fun getDaerah():List<Daerah>
-
-    @POST("users")
-    suspend fun createUser(@Body user: User): Response<User>
 
     data class User(
         val id_user: String,

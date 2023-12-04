@@ -6,10 +6,13 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
 
@@ -31,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.fragment_signup, null)
         val builder = AlertDialog.Builder(this)
         builder.setView(view).show()
+        val alertDialog = builder.show()
 
         val signupBtn = view.findViewById<Button>(R.id.signupUser) // Ganti dengan ID yang sesuai
         val nameEdit = view.findViewById<EditText>(R.id.nameEdit)
@@ -60,12 +64,36 @@ class LoginActivity : AppCompatActivity() {
         }
 
         signupBtn.setOnClickListener {
+            val id_daerah = spinner.selectedItem.toString()
+            val name = nameEdit.text.toString()
+            val email = emailEdit.text.toString()
+            val password = passwordEdit.text.toString()
 
-            val map = HashMap<String, String>()
-            map["name"] = nameEdit.text.toString()
-            map["email"] = emailEdit.text.toString()
-            map["password"] = passwordEdit.text.toString()
-
+            lifecycleScope.launch(Dispatchers.IO) {
+                try {
+                    val response = MoneyService.createUser(id_daerah, name, email, password)
+                    withContext(Dispatchers.Main) {
+                        if (response.isSuccessful) {
+                            // Request berhasil
+                            val userData = response.body()
+                            Log.d("Login activity", "ini usernya : $userData , ")
+                            alertDialog.dismiss()
+                            Toast.makeText(this@LoginActivity, "Berhasil melakukan registrasi!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Log.e("Login Activity", "Error: ${response.errorBody()?.string()}")
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Gagal registrasi: ${response.errorBody()?.string() ?: "Unknown Error"}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("Login activity", "error post user/ signup : ${e.message}")
+                    Toast.makeText(this@LoginActivity, "Gagal registrasi: ${e.message ?: "Unknown Error"}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
         }
     }
 
