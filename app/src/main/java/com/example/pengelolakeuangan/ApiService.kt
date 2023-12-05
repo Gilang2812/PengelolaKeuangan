@@ -1,8 +1,10 @@
 package com.example.pengelolakeuangan
 
+import com.google.gson.annotations.SerializedName
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -26,6 +28,15 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): Response<User>
+
+
+    @POST("login")
+    suspend fun login(@Body loginRequest: LoginRequest): Response<User>
+    data class LoginRequest(
+        @SerializedName("email") val email: String,
+        @SerializedName("password") val password: String
+    )
+
 
     @GET("user") // Ganti dengan endpoint yang benar
     suspend fun getUser(): List<User>

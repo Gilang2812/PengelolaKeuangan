@@ -44,7 +44,8 @@ class LoginActivity : AppCompatActivity() {
 
         val defaultOption = "Pilih Daerah"
         val defaultList = ArrayList<String>().apply { add(defaultOption) }
-        daerahAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, defaultList)
+        daerahAdapter =
+            ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, defaultList)
         daerahAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = daerahAdapter
 
@@ -78,19 +79,29 @@ class LoginActivity : AppCompatActivity() {
                             val userData = response.body()
                             Log.d("Login activity", "ini usernya : $userData , ")
                             alertDialog.dismiss()
-                            Toast.makeText(this@LoginActivity, "Berhasil melakukan registrasi!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Berhasil melakukan registrasi!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
                             Log.e("Login Activity", "Error: ${response.errorBody()?.string()}")
                             Toast.makeText(
                                 this@LoginActivity,
-                                "Gagal registrasi: ${response.errorBody()?.string() ?: "Unknown Error"}",
+                                "Gagal registrasi: ${
+                                    response.errorBody()?.string() ?: "Unknown Error"
+                                }",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                     }
                 } catch (e: Exception) {
                     Log.e("Login activity", "error post user/ signup : ${e.message}")
-                    Toast.makeText(this@LoginActivity, "Gagal registrasi: ${e.message ?: "Unknown Error"}", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Gagal registrasi: ${e.message ?: "Unknown Error"}",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
             }
@@ -100,18 +111,68 @@ class LoginActivity : AppCompatActivity() {
     private fun handleLoginDialog() {
         val view = layoutInflater.inflate(R.layout.fragment_login, null)
         val builder = AlertDialog.Builder(this)
-        builder.setView(view).show()
+        builder.setView(view)
+        val alertDialog = builder.create()
+        alertDialog.show()
 
         val loginBtn = view.findViewById<Button>(R.id.login) // Ganti dengan ID yang sesuai
         val emailEdit = view.findViewById<EditText>(R.id.emailEdit)
         val passwordEdit = view.findViewById<EditText>(R.id.passwordEdit)
 
         loginBtn.setOnClickListener {
-            val map = HashMap<String, String>()
-            map["email"] = emailEdit.text.toString()
-            map["password"] = passwordEdit.text.toString()
+            val email = emailEdit.text.toString()
+            val password = passwordEdit.text.toString()
 
-            // Tambahkan logika untuk memproses data login di sini
+            // Check if email and password are not empty
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                // Call the login function
+                lifecycleScope.launch {
+                    try {
+                        val loginRequest = ApiService.LoginRequest(email, password)
+                        val response = MoneyService.login(loginRequest)
+                        if (response.isSuccessful) {
+                            // Login successful, handle accordingly
+                            val userData = response.body()
+                            Log.d("Login activity", "ini usernya : $userData , ")
+                            alertDialog.dismiss()
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Login successful!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            // Login failed, handle accordingly
+                            Log.e("Login Activity", "Error: ${response.errorBody()?.string()}")
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Login failed: ${
+                                    response.errorBody()?.string() ?: "Unknown Error"
+                                }",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.e("Login activity", "error loginnya : ${response.body()}")
+
+                        }
+                    } catch (e: Exception) {
+                        Log.e("Login activity", "error during login: ${e.message}")
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Login failed: ${e.message ?: "Unknown Error"}",
+                            Toast.LENGTH_SHORT
+
+                        )
+                            .show()
+                        Log.e("Login activity", "error server loginnya : ${e.message}")
+
+                    }
+                }
+            } else {
+                // Handle empty fields (show a toast, for example)
+                Toast.makeText(this, "Email and password are required", Toast.LENGTH_SHORT).show()
+            }
+
+            // Dismiss the dialog after handling the login
+            alertDialog.dismiss()
         }
     }
 }
