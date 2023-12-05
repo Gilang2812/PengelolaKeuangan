@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
                 R.id.bugdet -> {
-                    replaceFragment(MonthlyFragment())
+                    replaceFragment(AnggaranFragment())
                     return@setOnItemSelectedListener true
                 }
                 R.id.more -> {
