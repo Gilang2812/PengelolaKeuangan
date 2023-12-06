@@ -6,6 +6,6 @@ import android.os.Bundle
 class tambahPemasukan : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pengeluaran_anggaran)
+        setContentView(R.layout.activity_tambah_pengeluaran)
     }
 }
