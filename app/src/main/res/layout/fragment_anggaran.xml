@@ -24,14 +24,18 @@
         android:paddingEnd="16dp"
         android:src="@drawable/kurangi" />
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="310dp"
-        android:layout_marginBottom="267dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="450dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:contentDescription="@string/tambah_pemasukan"
         android:onClick="showPopupMenu"
         app:srcCompat="@android:drawable/ic_input_add" />
