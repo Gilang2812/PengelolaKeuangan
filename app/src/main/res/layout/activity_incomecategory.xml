@@ -9,7 +9,8 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/headercategoryincome"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:background="#E9DCFE">
 
         <ImageView
             android:id="@+id/edit_bckinc"
@@ -20,28 +21,18 @@
             android:outlineAmbientShadowColor="@color/black"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            tools:ignore="TouchTargetSizeCheck,ImageContrastCheck" />
+            android:src="@drawable/ic_back"
+            tools:ignore="TouchTargetSizeCheck,ImageContrastCheck"
+            app:tint="@android:color/black" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:text="@string/title_pemasukan"
-            android:textSize="24sp"
-            android:layout_marginTop="15dp"/>
-
-        <ImageView
-            android:id="@+id/tambah_bckinc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/back"
-            android:onClick="onBackPressed"
-            android:outlineAmbientShadowColor="@color/black"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            tools:ignore="TouchTargetSizeCheck,ImageContrastCheck" />
+            android:layout_marginTop="15dp"
+            android:text="@string/incomekat"
+            android:textSize="20sp"
+            android:fontFamily="@font/poppinsmedium"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -51,7 +42,18 @@
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/list_kategori"
-        android:layout_below="@id/headercategoryincome"/>
+        android:layout_below="@id/headercategoryincome"
+        android:orientation="vertical"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/tambahinc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/tambahkategorincome"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </RelativeLayout>

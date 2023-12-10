@@ -9,10 +9,11 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/headercategory"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:background="#E9DCFE">
 
         <ImageView
-            android:id="@+id/edit_pemasukan"
+            android:id="@+id/edit_bckinc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/back"
@@ -20,16 +21,19 @@
             android:outlineAmbientShadowColor="@color/black"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            tools:ignore="TouchTargetSizeCheck,ImageContrastCheck" />
+            android:src="@drawable/ic_back"
+            tools:ignore="TouchTargetSizeCheck,ImageContrastCheck"
+            app:tint="@android:color/black" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:text="@string/title_pemasukan"
-            android:textSize="24sp"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:text="@string/category"
+            android:textSize="20sp"
+            android:fontFamily="@font/poppinsmedium"/>
+
     </com.google.android.material.appbar.MaterialToolbar>
 
     <ListView

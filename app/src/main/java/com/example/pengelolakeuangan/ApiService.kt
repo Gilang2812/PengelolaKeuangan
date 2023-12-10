@@ -7,6 +7,8 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import java.util.Date
+import com.google.gson.annotations.SerializedName
+import retrofit2.http.*
 
 private val retrofit  = Retrofit.Builder()
     .baseUrl("http://10.0.2.2:3000/")
@@ -25,6 +27,12 @@ interface ApiService {
     suspend fun getDaerah():List<Daerah>
     @GET("kategori") // Ganti "kategori" dengan endpoint yang sesuai
     suspend fun getKategori(): List<Kategori>
+    @POST("kategori")
+    suspend fun createKategori(@Body kategori: Kategori): Response<Kategori>
+
+    @DELETE("kategori/{id_kategori}")
+    suspend fun deleteKategori(@Path("id_kategori") idKategori: String): Response<Unit>
+
 
     @POST("users")
     suspend fun createUser(@Body user: User): Response<User>
@@ -59,6 +67,7 @@ interface ApiService {
     )
 
     data class Kategori(
+        @SerializedName("id_kategori")
         val id_kategori: String,
         val id_jenis: String,
         val nama: String,
