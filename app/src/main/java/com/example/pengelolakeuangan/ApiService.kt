@@ -12,7 +12,7 @@ import retrofit2.http.POST
 import java.util.Date
 
 private val retrofit  = Retrofit.Builder()
-    .baseUrl("https://ptbfahriganteng.et.r.appspot.com.com/")
+    .baseUrl("https://ptbfahriganteng.et.r.appspot.com/")
     .addConverterFactory(GsonConverterFactory.create())
     .build()
 
