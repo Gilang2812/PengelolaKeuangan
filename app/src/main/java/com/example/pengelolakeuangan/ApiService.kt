@@ -8,6 +8,7 @@ import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import java.util.Date
 
@@ -31,7 +32,7 @@ interface ApiService {
 
 
     @POST("login")
-    suspend fun login(@Body loginRequest: LoginRequest): Response<User>
+    suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
     data class LoginRequest(
         @SerializedName("email") val email: String,
         @SerializedName("password") val password: String
@@ -48,7 +49,7 @@ interface ApiService {
     suspend fun getUser(): List<User>
 
     @GET("transaksi")
-    suspend fun getTransaksi():List<Transaksi>
+    suspend fun getTransaksi(@Header("Authorization") authorization: String): List<Transaksi>
 
     @GET("daerah")
     suspend fun getDaerah():List<Daerah>

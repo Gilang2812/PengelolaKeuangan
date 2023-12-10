@@ -1,5 +1,8 @@
 package com.example.pengelolakeuangan
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -128,8 +131,11 @@ class LoginActivity : AppCompatActivity() {
                         val loginRequest = ApiService.LoginRequest(email, password)
                         val response = MoneyService.login(loginRequest)
                         if (response.isSuccessful) {
-                            // Login successful, handle accordingly
-                            val userData = response.body()
+                          val userData = response.body()
+                            userData?.token?.let {
+                                saveTokenToSharedPreferences(it)
+                            }
+
                             Log.d("Login activity", "ini usernya : $userData , ")
                             alertDialog.dismiss()
                             Toast.makeText(
@@ -137,6 +143,9 @@ class LoginActivity : AppCompatActivity() {
                                 "Login successful!",
                                 Toast.LENGTH_SHORT
                             ).show()
+
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            startActivity(intent)
                         } else {
                             // Login failed, handle accordingly
                             Log.e("Login Activity", "Error: ${response.errorBody()?.string()}")
@@ -148,7 +157,6 @@ class LoginActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                             Log.e("Login activity", "error loginnya : ${response.body()}")
-
                         }
                     } catch (e: Exception) {
                         Log.e("Login activity", "error during login: ${e.message}")
@@ -156,11 +164,8 @@ class LoginActivity : AppCompatActivity() {
                             this@LoginActivity,
                             "Login failed: ${e.message ?: "Unknown Error"}",
                             Toast.LENGTH_SHORT
-
-                        )
-                            .show()
+                        ).show()
                         Log.e("Login activity", "error server loginnya : ${e.message}")
-
                     }
                 }
             } else {
@@ -171,5 +176,29 @@ class LoginActivity : AppCompatActivity() {
             // Dismiss the dialog after handling the login
             alertDialog.dismiss()
         }
+    }
+
+    // Define a function to save the token in SharedPreferences
+    private fun saveTokenToSharedPreferences(token: String) {
+        // Use a unique name for your SharedPreferences file
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
+
+        // Use an editor to modify SharedPreferences
+        val editor = sharedPreferences.edit()
+
+        // Save the token with a unique key, for example, "user_token"
+        editor.putString("user_token", token)
+
+        // Apply the changes
+        editor.apply()
+    }
+    fun retrieveTokenFromSharedPreferences(): String? {
+        // Use the same unique name for your SharedPreferences file
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
+
+        // Retrieve the token using the unique key, for example, "user_token"
+        return sharedPreferences.getString("user_token", null)
     }
 }

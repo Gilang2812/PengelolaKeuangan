@@ -35,25 +35,6 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    internal fun fetchTransaksi(){
-        viewModelScope.launch {
-            try {
-                val response = MoneyService.getTransaksi()
-                Log.d("RESPONSE", response.toString())
-                _transaksiState.value = _transaksiState.value.copy(
-                    list = response,
-                    loading = false,
-                    error = null
-
-                )
-            }catch (e:Exception){
-                _transaksiState.value = transaksiState.value.copy(
-                    loading = false,
-                    error = "Error fetching transaksi ${e.message}"
-                )
-            }
-        }
-    }
 
     data class UserState(
         val loading: Boolean = true,

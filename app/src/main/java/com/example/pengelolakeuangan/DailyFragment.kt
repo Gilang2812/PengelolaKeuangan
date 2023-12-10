@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pengelolakeuangan.adapter.TransaksiAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -26,13 +26,20 @@ class DailyFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_daily_list, container, false)
         recyclerView = view.findViewById(R.id.list)
+        val token = SharedPreferencesUtil.retrieveTokenFromSharedPreferences(requireContext())
 
         lifecycleScope.launch {
             try {
-                val response = MoneyService.getTransaksi()
-                val transaksiList = response
-                val adapter = TransaksiAdapter(transaksiList)
-                recyclerView.adapter = adapter
+                if (!token.isNullOrBlank()) {
+                    // Call getTransaksi with Authorization header
+                    val response = MoneyService.getTransaksi("Bearer $token")
+                    val transaksiList = response
+                    val adapter =TransaksiAdapter(transaksiList)
+                    recyclerView.adapter = adapter
+                    Log.d("DailyFragment", response.toString())
+                } else {
+                    Snackbar.make(requireView(), "Token not available", Snackbar.LENGTH_SHORT).show()
+                }
             } catch (e: Exception) {
                 Log.e("DailyFragment", "Error fetching transaksis: ${e.message}", e)
                 Snackbar.make(requireView(), "Error di daily fragment: ${e.message}", Snackbar.LENGTH_SHORT).show()
@@ -55,7 +62,7 @@ class DailyFragment : Fragment() {
                     Snackbar.make(requireView(), "pemasukan clicked", Snackbar.LENGTH_SHORT).show()
                     lifecycleScope.launch(Dispatchers.Main) {
                         try {
-
+                            // Add your logic for menu_pemasukan here
                         } catch (e: Exception) {
                             Snackbar.make(requireView(), "Error: ${e.message}", Snackbar.LENGTH_SHORT).show()
                         }
@@ -71,28 +78,5 @@ class DailyFragment : Fragment() {
         }
 
         popupMenu.show()
-    }
-}
-
-class TransaksiAdapter(private val transaksiList: List<ApiService.Transaksi>) : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_daily, parent, false)
-        return ViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val transaksi = transaksiList[position]
-        holder.bind(transaksi)
-    }
-
-    override fun getItemCount(): Int {
-        return transaksiList.size
-    }
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(transaksi: ApiService.Transaksi) {
-            itemView.findViewById<TextView>(R.id.listpeng).text = transaksi.jumlah.toString()
-        }
     }
 }
