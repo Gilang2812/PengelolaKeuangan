@@ -12,7 +12,7 @@ import retrofit2.http.POST
 import java.util.Date
 
 private val retrofit  = Retrofit.Builder()
-    .baseUrl("https://cash-flow-mate.et.r.appspot.com/")
+    .baseUrl("https://ptbfahriganteng.et.r.appspot.com.com/")
     .addConverterFactory(GsonConverterFactory.create())
     .build()
 
@@ -37,6 +37,12 @@ interface ApiService {
         @SerializedName("password") val password: String
     )
 
+
+    data class LoginResponse(
+        @SerializedName("token") val token: String,
+        @SerializedName("message") val message: String,
+        @SerializedName("user") val user: User
+    )
 
     @GET("user") // Ganti dengan endpoint yang benar
     suspend fun getUser(): List<User>

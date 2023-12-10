@@ -33,10 +33,9 @@ class LoginActivity : AppCompatActivity() {
     private fun handleSignupDialog() {
         val view = layoutInflater.inflate(R.layout.fragment_signup, null)
         val builder = AlertDialog.Builder(this)
-        builder.setView(view).show()
-        val alertDialog = builder.show()
+        val alertDialog = builder.setView(view).show() // Combine setView and show
 
-        val signupBtn = view.findViewById<Button>(R.id.signupUser) // Ganti dengan ID yang sesuai
+        val signupBtn = view.findViewById<Button>(R.id.signupUser)
         val nameEdit = view.findViewById<EditText>(R.id.nameEdit)
         val spinner: Spinner = view.findViewById(R.id.optionsSpinner)
         val emailEdit = view.findViewById<EditText>(R.id.emailEdit)
@@ -57,7 +56,6 @@ class LoginActivity : AppCompatActivity() {
                 daerahAdapter.notifyDataSetChanged()
 
                 Log.e("Login Activity", "succes fetching daerah: ${daerahNames}")
-
 
             } catch (e: Exception) {
                 Log.e("Login Activity", "  Error fetching daerah: ${e.message}", e)
@@ -111,11 +109,10 @@ class LoginActivity : AppCompatActivity() {
     private fun handleLoginDialog() {
         val view = layoutInflater.inflate(R.layout.fragment_login, null)
         val builder = AlertDialog.Builder(this)
-        builder.setView(view)
-        val alertDialog = builder.create()
+        val alertDialog = builder.setView(view).create() // Use create() instead of show()
         alertDialog.show()
 
-        val loginBtn = view.findViewById<Button>(R.id.login) // Ganti dengan ID yang sesuai
+        val loginBtn = view.findViewById<Button>(R.id.login)
         val emailEdit = view.findViewById<EditText>(R.id.emailEdit)
         val passwordEdit = view.findViewById<EditText>(R.id.passwordEdit)
 
