@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- list_kategori.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -14,17 +14,15 @@
         android:onClick="onBackPressed"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:src="@drawable/kurangi"
-        />
+        android:src="@drawable/kurangi" />
 
     <TextView
-        android:id="@+id/textViewItem"
+        android:id="@+id/textViewItemincome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:text="@string/Kategori"
         android:textColor="@android:color/black"
         android:layout_marginStart="8dp"
-    />
-
+        android:layout_marginEnd="8dp"/>
 </LinearLayout>

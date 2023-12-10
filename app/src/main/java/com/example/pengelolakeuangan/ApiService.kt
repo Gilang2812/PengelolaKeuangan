@@ -9,7 +9,7 @@ import retrofit2.http.POST
 import java.util.Date
 
 private val retrofit  = Retrofit.Builder()
-    .baseUrl("https://cash-flow-mate.et.r.appspot.com/")
+    .baseUrl("http://10.0.2.2:3000/")
     .addConverterFactory(GsonConverterFactory.create())
     .build()
 
@@ -23,6 +23,8 @@ interface ApiService {
     suspend fun getTransaksi():List<Transaksi>
 
     suspend fun getDaerah():List<Daerah>
+    @GET("kategori") // Ganti "kategori" dengan endpoint yang sesuai
+    suspend fun getKategori(): List<Kategori>
 
     @POST("users")
     suspend fun createUser(@Body user: User): Response<User>
@@ -56,6 +58,13 @@ interface ApiService {
         val updated_at: Date
     )
 
+    data class Kategori(
+        val id_kategori: String,
+        val id_jenis: String,
+        val nama: String,
+        val created_at: Date,
+        val updated_at: Date
+    )
 
 
 }

@@ -34,7 +34,7 @@ class activity_kategori : AppCompatActivity() {
             // Add more specific actions based on the selected item if needed
             when (position) {
                 0 -> {
-                    startActivity(Intent(this, IncomecategoryActivity::class.java))
+                    startActivity(Intent(this, IncomeCategoryActivity::class.java))
 
                     // Handle Income Category Setting click
                     // Example: startActivity(Intent(this, IncomeCategorySettingActivity::class.java))

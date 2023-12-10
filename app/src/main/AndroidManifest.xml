@@ -33,7 +33,7 @@
             android:name=".ExpensescategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".IncomecategoryActivity"
+            android:name=".IncomeCategoryActivity"
             android:exported="false" />
         <activity
             android:name=".activity_kategori"
