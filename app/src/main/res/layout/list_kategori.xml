@@ -18,8 +18,9 @@
 
     <TextView
         android:id="@+id/textViewItemincome"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textSize="16sp"
         android:text="@string/Kategori"
         android:fontFamily="@font/poppinslight"
@@ -27,11 +28,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"/>
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="1"
-        android:background="?android:attr/listDivider"
-        />
+    <ImageView
+        android:id="@+id/edit"
+        android:layout_width="50sp"
+        android:layout_height="25dp"
+        android:contentDescription="@string/delete"
+        android:onClick="onBackPressed"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:src="@drawable/pena" />
+
 </LinearLayout>

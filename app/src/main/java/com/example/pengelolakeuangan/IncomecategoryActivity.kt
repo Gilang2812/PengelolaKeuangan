@@ -52,12 +52,14 @@ class IncomeCategoryActivity : AppCompatActivity() {
         }
 
         GlobalScope.launch(Dispatchers.IO) {
+            // Inside your GlobalScope.launch(Dispatchers.IO) block or wherever you update the dataset
             try {
                 val response = MoneyService.getKategori()
                 withContext(Dispatchers.Main) {
                     if (response.isNotEmpty()) {
+                        kategoriList.clear()  // Clear the list before adding new items
                         kategoriList.addAll(response)
-                        incomeCategoryAdapter.notifyDataSetChanged()
+                        incomeCategoryAdapter.updateDataset(kategoriList)  // Use the correct function
                         // Tambahkan log untuk memeriksa jumlah elemen
                         Log.d("IncomeCategoryActivity", "Jumlah kategori: ${response.size}")
                     }
@@ -66,6 +68,7 @@ class IncomeCategoryActivity : AppCompatActivity() {
                 // Handle error, e.g., show a toast or log the error
                 Log.e("IncomeCategoryActivity", "Error: ${e.message}", e)
             }
+
         }
     }
 

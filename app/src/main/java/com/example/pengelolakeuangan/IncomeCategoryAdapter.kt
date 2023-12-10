@@ -18,6 +18,7 @@ class IncomeCategoryAdapter(private val kategoriList: MutableList<ApiService.Kat
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewItemIncome: TextView = itemView.findViewById(R.id.textViewItemincome)
         val imageViewHapus: ImageView = itemView.findViewById(R.id.hapus)
+        val imageViewEdit: ImageView = itemView.findViewById(R.id.edit)
 
         init {
             // Add click listener for the delete icon
@@ -62,11 +63,15 @@ class IncomeCategoryAdapter(private val kategoriList: MutableList<ApiService.Kat
 
         // Tambahkan kondisi untuk memeriksa id_jenis
         if (currentKategori.id_jenis == "1") {
-            holder.textViewItemIncome.text = currentKategori.nama // Sembunyikan ImageView
+            holder.textViewItemIncome.text = currentKategori.nama
+            holder.textViewItemIncome.visibility = View.VISIBLE
+            holder.imageViewHapus.visibility = View.VISIBLE
+            holder.imageViewEdit.visibility = View.VISIBLE
         } else {
             // Tampilkan teks lain atau kosong jika id_jenis tidak sesuai
             holder.textViewItemIncome.visibility = View.GONE
-            holder.imageViewHapus.visibility = View.GONE // Tampilkan ImageView
+            holder.imageViewHapus.visibility = View.GONE
+            holder.imageViewEdit.visibility = View.GONE
         }
     }
 
@@ -74,10 +79,18 @@ class IncomeCategoryAdapter(private val kategoriList: MutableList<ApiService.Kat
         return kategoriList.size
     }
 
-    // Add a function to update the dataset
+    // Add a function to update the dataset and sort by id_jenis
     fun updateDataset(newKategoriList: List<ApiService.Kategori>) {
-        kategoriList.clear()
-        kategoriList.addAll(newKategoriList)
+        // Remove items that are not id_jenis == "1"
+        kategoriList.removeAll { it.id_jenis != "1" }
+        // Add new items
+
+        // Sort the list by id_jenis
+        kategoriList.sortWith(compareByDescending { it.id_jenis == "1" })
+
+        // Notify data set changed
         notifyDataSetChanged()
     }
+
 }
+
