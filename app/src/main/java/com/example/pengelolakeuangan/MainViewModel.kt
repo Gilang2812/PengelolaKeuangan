@@ -5,6 +5,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pengelolakeuangan.adapter.Transaksi
+import com.example.pengelolakeuangan.adapter.User
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -38,12 +40,12 @@ class MainViewModel : ViewModel() {
 
     data class UserState(
         val loading: Boolean = true,
-        val list: List<ApiService.User> = emptyList(),
+        val list: List<User> = emptyList(),
         val error: String? = null
     )
     data class TransaksiState(
         val loading: Boolean = true,
-        val list: List<ApiService.Transaksi> = emptyList(),
+        val list: List<Transaksi> = emptyList(),
         val error: String? = null
     )
 }

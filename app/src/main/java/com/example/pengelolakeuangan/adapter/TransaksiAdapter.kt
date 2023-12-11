@@ -5,14 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pengelolakeuangan.ApiService
 import com.example.pengelolakeuangan.R
 
-class TransaksiAdapter(transaksiList: List<ApiService.Transaksi>) : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
+class TransaksiAdapter(transaksiList: List<Transaksi>) : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
 
-    private var transaksiList = emptyList<ApiService.Transaksi>()
+    private var transaksiList = emptyList<Transaksi>()
 
-    fun setData(transaksiList: List<ApiService.Transaksi>) {
+    fun setData(transaksiList: List<Transaksi>) {
         this.transaksiList = transaksiList
         notifyDataSetChanged()
     }
@@ -32,7 +31,7 @@ class TransaksiAdapter(transaksiList: List<ApiService.Transaksi>) : RecyclerView
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(transaksi: ApiService.Transaksi) {
+        fun bind(transaksi: Transaksi) {
             itemView.findViewById<TextView>(R.id.listpeng).text = transaksi.jumlah.toString()
         }
     }

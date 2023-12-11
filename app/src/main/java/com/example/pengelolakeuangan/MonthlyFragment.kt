@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pengelolakeuangan.adapter.User
 import kotlinx.coroutines.launch
 
 class MonthlyFragment : Fragment() {
@@ -36,7 +37,7 @@ class MonthlyFragment : Fragment() {
         return view
     }
 
-    class UserAdapter(private val userList: List<ApiService.User>) :
+    class UserAdapter(private val userList: List<User>) :
         RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -55,7 +56,7 @@ class MonthlyFragment : Fragment() {
         }
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            fun bind(user: ApiService.User) {
+            fun bind(user: User) {
                 itemView.findViewById<TextView>(R.id.listpeng).text = user.id_user
 
             }

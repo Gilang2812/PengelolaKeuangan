@@ -52,6 +52,13 @@ class DailyFragment : Fragment() {
         return view
     }
 
+    private fun replaceFragment(fragment: Fragment) {
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
     private fun showPopupMenu() {
         val popupMenu = PopupMenu(requireContext(), fab)
         popupMenu.menuInflater.inflate(R.menu.menu_fab, popupMenu.menu)
@@ -59,10 +66,12 @@ class DailyFragment : Fragment() {
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_pemasukan -> {
-                    Snackbar.make(requireView(), "pemasukan clicked", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(requireView(), "Pemasukan clicked", Snackbar.LENGTH_SHORT).show()
                     lifecycleScope.launch(Dispatchers.Main) {
                         try {
-                            // Add your logic for menu_pemasukan here
+                            // Gantikan dengan PemasukanFragment
+                            val pemasukanFragment = PemasukanFragment()
+                            replaceFragment(pemasukanFragment)
                         } catch (e: Exception) {
                             Snackbar.make(requireView(), "Error: ${e.message}", Snackbar.LENGTH_SHORT).show()
                         }
@@ -79,4 +88,5 @@ class DailyFragment : Fragment() {
 
         popupMenu.show()
     }
+
 }

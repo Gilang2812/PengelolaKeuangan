@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.pengelolakeuangan.adapter.LoginRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -128,7 +129,7 @@ class LoginActivity : AppCompatActivity() {
                 // Call the login function
                 lifecycleScope.launch {
                     try {
-                        val loginRequest = ApiService.LoginRequest(email, password)
+                        val loginRequest = LoginRequest(email, password)
                         val response = MoneyService.login(loginRequest)
                         if (response.isSuccessful) {
                           val userData = response.body()
