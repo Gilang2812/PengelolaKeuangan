@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_alignParentBottom="true">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_asset"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:background="#e0e0e0"
+        tools:listitem="@layout/fragment_daily" />
+
+</RelativeLayout>
