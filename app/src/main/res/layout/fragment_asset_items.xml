@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_alignParentBottom="true">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_asset"
@@ -11,6 +15,8 @@
         android:layout_height="match_parent"
         android:padding="8dp"
         android:background="#e0e0e0"
-        tools:listitem="@layout/fragment_daily" />
+        tools:listitem="@layout/fragment_aset_item_list"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"/>
 
-</RelativeLayout>
+</LinearLayout>

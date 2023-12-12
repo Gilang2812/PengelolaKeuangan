@@ -1,32 +1,26 @@
 package com.example.pengelolakeuangan
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+
 class PemasukanFragment : Fragment() {
 
     private val calendar = Calendar.getInstance()
 
-    private val kategoriItems = arrayOf("Kategori 1", "Kategori 2", "Kategori 3", "Lainnya")
-    private val asetItems = arrayOf("Aset 1", "Aset 2", "Aset 3", "Lainnya")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +54,7 @@ class PemasukanFragment : Fragment() {
         }
 
         view.findViewById<View>(R.id.input_aset).setOnClickListener {
-            showListAset(view)
+            showListAset()
         }
     }
 
@@ -98,30 +92,14 @@ class PemasukanFragment : Fragment() {
     }
 
     private fun showListKategori(view: View) {
-        val inputKategori: AutoCompleteTextView = view.findViewById(R.id.input_kategori)
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, kategoriItems)
-        inputKategori.setAdapter(adapter)
-
-        inputKategori.setOnItemClickListener { _, _, position, _ ->
-            val selectedKategori = adapter.getItem(position)
-            inputKategori.setText(selectedKategori)
-        }
-
-        inputKategori.showDropDown()
     }
 
-    private fun showListAset(view: View) {
-        val inputAset: TextInputEditText = view.findViewById(R.id.input_aset)
+    private fun showListAset() {
 
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Pilih Aset")
-            .setItems(asetItems) { _: DialogInterface?, which: Int ->
-                val selectedAset = asetItems[which]
-                inputAset.setText(selectedAset)
-            }
+        val dialog = AsetDialogFragment()
 
-        val dialog = builder.create()
-        dialog.show()
+        // Show the dialog
+        dialog.show(requireActivity().supportFragmentManager, "AsetDialogFragment")
     }
 }
