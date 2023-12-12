@@ -1,5 +1,6 @@
 package com.example.pengelolakeuangan
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -52,13 +53,6 @@ class DailyFragment : Fragment() {
         return view
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
     private fun showPopupMenu() {
         val popupMenu = PopupMenu(requireContext(), fab)
         popupMenu.menuInflater.inflate(R.menu.menu_fab, popupMenu.menu)
@@ -69,9 +63,8 @@ class DailyFragment : Fragment() {
                     Snackbar.make(requireView(), "Pemasukan clicked", Snackbar.LENGTH_SHORT).show()
                     lifecycleScope.launch(Dispatchers.Main) {
                         try {
-                            // Gantikan dengan PemasukanFragment
-                            val pemasukanFragment = PemasukanFragment()
-                            replaceFragment(pemasukanFragment)
+                            val intent = Intent(requireContext(), PemasukanActivity::class.java)
+                            startActivity(intent)
                         } catch (e: Exception) {
                             Snackbar.make(requireView(), "Error: ${e.message}", Snackbar.LENGTH_SHORT).show()
                         }

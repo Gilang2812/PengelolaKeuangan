@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pengelolakeuangan.R
+import java.util.Date
 
 class TransaksiAdapter(transaksiList: List<Transaksi>) : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
 
@@ -36,3 +37,16 @@ class TransaksiAdapter(transaksiList: List<Transaksi>) : RecyclerView.Adapter<Tr
         }
     }
 }
+
+data class Transaksi(
+    val id_transaksi: String,
+    val id_user: String,
+    val id_kategori: String,
+    val id_jenis: String,
+    val id_aset: String,
+    val tanggal: Date,
+    val jumlah: Int,
+    val note: String,
+    val created_at: Date,
+    val updated_at: Date
+)

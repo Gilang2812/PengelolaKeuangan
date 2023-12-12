@@ -4,72 +4,62 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TimePicker
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-
-class PemasukanFragment : Fragment() {
+class PemasukanActivity : AppCompatActivity() {
 
     private val calendar = Calendar.getInstance()
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pemasukan, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_pemasukan)
 
         try {
             val currentDate = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
 
-            val textInputLayout: TextInputLayout = view.findViewById(R.id.tanggalTextView)
+            val textInputLayout: TextInputLayout = findViewById(R.id.tanggalTextView)
             val tanggalEditText: EditText = textInputLayout.findViewById(R.id.input_pemasukan)
 
             tanggalEditText.setText("$currentDate")
 
         } catch (e: Exception) {
-            Log.e("Pemasukan Fragment", "Terjadi kesalahan: ${e.message}", e)
+            Log.e("Pemasukan Activity", "Terjadi kesalahan: ${e.message}", e)
         }
 
-        view.findViewById<View>(R.id.input_pemasukan).setOnClickListener {
-            showDateTimePicker(view)
+        findViewById<View>(R.id.input_pemasukan).setOnClickListener {
+            showDateTimePicker()
         }
 
-        view.findViewById<View>(R.id.input_kategori).setOnClickListener {
-            showListKategori(view)
+        findViewById<View>(R.id.input_kategori).setOnClickListener {
+            showListKategori()
         }
 
-        view.findViewById<View>(R.id.input_aset).setOnClickListener {
+        findViewById<View>(R.id.input_aset).setOnClickListener {
             showListAset()
         }
     }
 
-    private fun showDateTimePicker(view: View) {
-        val inputPemasukan: EditText = view.findViewById(R.id.input_pemasukan)
+    private fun showDateTimePicker() {
+        val inputPemasukan: EditText = findViewById(R.id.input_pemasukan)
 
         val datePickerDialog = DatePickerDialog(
-            requireContext(),
+            this,
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 calendar.set(Calendar.YEAR, year)
                 calendar.set(Calendar.MONTH, monthOfYear)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
                 val timePickerDialog = TimePickerDialog(
-                    requireContext(),
+                    this,
                     TimePickerDialog.OnTimeSetListener { _: TimePicker?, hourOfDay: Int, minute: Int ->
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
                         calendar.set(Calendar.MINUTE, minute)
@@ -91,15 +81,22 @@ class PemasukanFragment : Fragment() {
         datePickerDialog.show()
     }
 
-    private fun showListKategori(view: View) {
-
+    private fun showListKategori() {
+        // Implement the logic for showing the list of categories
     }
 
     private fun showListAset() {
+        val assetFragment = AsetDialogFragment()
 
-        val dialog = AsetDialogFragment()
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
 
-        // Show the dialog
-        dialog.show(requireActivity().supportFragmentManager, "AsetDialogFragment")
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+
+        fragmentTransaction.add(android.R.id.content, assetFragment, "asetFragment")
+
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
+
 }

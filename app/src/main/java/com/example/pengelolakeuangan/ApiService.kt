@@ -39,4 +39,7 @@ interface ApiService {
 
     @GET("daerah")
     suspend fun getDaerah(): List<Daerah>
+
+    @GET("aset")
+    suspend fun getAset(@Header("Authorization") authorization: String) : List<Aset>
 }
