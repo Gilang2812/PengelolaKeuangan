@@ -5,14 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pengelolakeuangan.PemasukanActivity
 import com.example.pengelolakeuangan.R
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
-class AsetAdapter(listAset: List<Aset>) : RecyclerView.Adapter<AsetAdapter.ViewHolder>() {
-
-    private var listAset = emptyList<Aset>()
+class AsetAdapter(private var listAset: List<Aset>, private val listener: PemasukanActivity) :
+    RecyclerView.Adapter<AsetAdapter.ViewHolder>() {
 
     fun setData(listAset: List<Aset>) {
         this.listAset = listAset
@@ -20,7 +18,8 @@ class AsetAdapter(listAset: List<Aset>) : RecyclerView.Adapter<AsetAdapter.ViewH
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_aset_item_list, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.fragment_aset_item_list, parent, false)
         return ViewHolder(view)
     }
 
@@ -31,23 +30,32 @@ class AsetAdapter(listAset: List<Aset>) : RecyclerView.Adapter<AsetAdapter.ViewH
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val aset = listAset[position]
         holder.bind(aset)
+        holder.itemView.setOnClickListener {
+            listener.onItemClick(aset.nama, aset.id_aset)
+        }
+    }
+    private var itemClickListener: OnItemClickListener? = null
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.itemClickListener = listener
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(aset: Aset) {
-            itemView.findViewById<TextView>(R.id.aset_name).text = aset.nama
-        }
+        private val namaTextView: TextView = itemView.findViewById(R.id.aset_name)
 
-        private fun formatTanggal(date: Date): String {
-            val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-            return sdf.format(date)
+        fun bind(aset: Aset) {
+            namaTextView.text = aset.nama
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(nama: String, id_aset: String)
     }
 }
 
 data class Aset(
-    val id_aset : String,
-    val nama : String,
+    val id_aset: String,
+    val nama: String,
     val created_at: Date,
     val updated_at: Date
 )

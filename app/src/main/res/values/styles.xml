@@ -6,4 +6,12 @@
     <style name="NavMenuItemStyle">
         <item name="android:tint">@color/red</item>
     </style>
+    <style name="CustomDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:layout_gravity">bottom</item>
+    </style>
+
 </resources>

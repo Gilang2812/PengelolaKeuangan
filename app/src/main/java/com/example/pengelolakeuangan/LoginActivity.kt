@@ -17,6 +17,8 @@ import com.example.pengelolakeuangan.adapter.LoginRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import java.io.IOException
 
 class LoginActivity : AppCompatActivity() {
 
@@ -37,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
     private fun handleSignupDialog() {
         val view = layoutInflater.inflate(R.layout.fragment_signup, null)
         val builder = AlertDialog.Builder(this)
-        val alertDialog = builder.setView(view).show() // Combine setView and show
+        val alertDialog = builder.setView(view).show()
 
         val signupBtn = view.findViewById<Button>(R.id.signupUser)
         val nameEdit = view.findViewById<EditText>(R.id.nameEdit)
@@ -59,10 +61,10 @@ class LoginActivity : AppCompatActivity() {
                 daerahAdapter.addAll(daerahNames)
                 daerahAdapter.notifyDataSetChanged()
 
-                Log.e("Login Activity", "succes fetching daerah: ${daerahNames}")
+                Log.d("Login Activity", "Success fetching daerah: $daerahNames")
 
             } catch (e: Exception) {
-                Log.e("Login Activity", "  Error fetching daerah: ${e.message}", e)
+                Log.e("Login Activity", "Error fetching daerah: ${e.message}", e)
             }
         }
 
@@ -77,9 +79,8 @@ class LoginActivity : AppCompatActivity() {
                     val response = MoneyService.createUser(id_daerah, name, email, password)
                     withContext(Dispatchers.Main) {
                         if (response.isSuccessful) {
-                            // Request berhasil
                             val userData = response.body()
-                            Log.d("Login activity", "ini usernya : $userData , ")
+                            Log.d("Login activity", "User created: $userData")
                             alertDialog.dismiss()
                             Toast.makeText(
                                 this@LoginActivity,
@@ -97,14 +98,19 @@ class LoginActivity : AppCompatActivity() {
                             ).show()
                         }
                     }
+                } catch (e: HttpException) {
+                    Log.e("Login activity", "HTTP Error: ${e.code()} ${e.message()}")
+                } catch (e: IOException) {
+                    Log.e("Login activity", "Network Error: ${e.message}")
                 } catch (e: Exception) {
-                    Log.e("Login activity", "error post user/ signup : ${e.message}")
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Gagal registrasi: ${e.message ?: "Unknown Error"}",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    Log.e("Login activity", "Error post user/signup: ${e.message}", e)
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Gagal registrasi: ${e.message ?: "Unknown Error"}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }
@@ -113,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
     private fun handleLoginDialog() {
         val view = layoutInflater.inflate(R.layout.fragment_login, null)
         val builder = AlertDialog.Builder(this)
-        val alertDialog = builder.setView(view).create() // Use create() instead of show()
+        val alertDialog = builder.setView(view).create()
         alertDialog.show()
 
         val loginBtn = view.findViewById<Button>(R.id.login)
@@ -124,31 +130,34 @@ class LoginActivity : AppCompatActivity() {
             val email = emailEdit.text.toString()
             val password = passwordEdit.text.toString()
 
-            // Check if email and password are not empty
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                // Call the login function
                 lifecycleScope.launch {
                     try {
+                        val token = retrieveTokenFromSharedPreferences()
+                        if (token != null) {
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            alertDialog.dismiss()
+                            return@launch
+                        }
+
                         val loginRequest = LoginRequest(email, password)
                         val response = MoneyService.login(loginRequest)
                         if (response.isSuccessful) {
-                          val userData = response.body()
+                            val userData = response.body()
                             userData?.token?.let {
                                 saveTokenToSharedPreferences(it)
+                                Log.d("Login activity", "Received token: $it")
                             }
 
-                            Log.d("Login activity", "ini usernya : $userData , ")
+                            Log.d("Login activity", "User logged in: $userData")
                             alertDialog.dismiss()
                             Toast.makeText(
                                 this@LoginActivity,
                                 "Login successful!",
                                 Toast.LENGTH_SHORT
                             ).show()
-
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                            startActivity(intent)
                         } else {
-                            // Login failed, handle accordingly
                             Log.e("Login Activity", "Error: ${response.errorBody()?.string()}")
                             Toast.makeText(
                                 this@LoginActivity,
@@ -157,49 +166,35 @@ class LoginActivity : AppCompatActivity() {
                                 }",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            Log.e("Login activity", "error loginnya : ${response.body()}")
                         }
                     } catch (e: Exception) {
-                        Log.e("Login activity", "error during login: ${e.message}")
+                        Log.e("Login activity", "Error during login: ${e.message}", e)
                         Toast.makeText(
                             this@LoginActivity,
                             "Login failed: ${e.message ?: "Unknown Error"}",
                             Toast.LENGTH_SHORT
                         ).show()
-                        Log.e("Login activity", "error server loginnya : ${e.message}")
                     }
                 }
             } else {
-                // Handle empty fields (show a toast, for example)
                 Toast.makeText(this, "Email and password are required", Toast.LENGTH_SHORT).show()
             }
 
-            // Dismiss the dialog after handling the login
             alertDialog.dismiss()
         }
     }
 
-    // Define a function to save the token in SharedPreferences
     private fun saveTokenToSharedPreferences(token: String) {
-        // Use a unique name for your SharedPreferences file
         val sharedPreferences: SharedPreferences =
             getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
-
-        // Use an editor to modify SharedPreferences
         val editor = sharedPreferences.edit()
-
-        // Save the token with a unique key, for example, "user_token"
         editor.putString("user_token", token)
-
-        // Apply the changes
         editor.apply()
     }
-    fun retrieveTokenFromSharedPreferences(): String? {
-        // Use the same unique name for your SharedPreferences file
+
+    private fun retrieveTokenFromSharedPreferences(): String? {
         val sharedPreferences: SharedPreferences =
             getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
-
-        // Retrieve the token using the unique key, for example, "user_token"
         return sharedPreferences.getString("user_token", null)
     }
 }

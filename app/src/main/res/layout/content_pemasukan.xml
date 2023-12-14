@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--content_pemasukan.xml-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -111,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/kategori">
 
-                <AutoCompleteTextView
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_kategori"
                     android:layout_width="match_parent"
                     android:paddingLeft="@dimen/padding_input"
