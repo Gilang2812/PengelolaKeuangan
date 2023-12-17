@@ -1,4 +1,4 @@
-package com.example.pengelolakeuangan
+package com.example.pengelolakeuangan.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pengelolakeuangan.ApiService
+import com.example.pengelolakeuangan.MoneyService
+import com.example.pengelolakeuangan.R
+import com.example.pengelolakeuangan.SharedPreferencesUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -19,7 +23,7 @@ class IncomeCategoryAdapter(private val kategoriList: MutableList<ApiService.Kat
         val textViewItemIncome: TextView = itemView.findViewById(R.id.textViewItemincome)
         val imageViewHapus: ImageView = itemView.findViewById(R.id.hapus)
         val imageViewEdit: ImageView = itemView.findViewById(R.id.edit)
-
+        val token = SharedPreferencesUtil.retrieveTokenFromSharedPreferences(itemView.context)
         init {
             // Add click listener for the delete icon
             imageViewHapus.setOnClickListener {
@@ -30,7 +34,7 @@ class IncomeCategoryAdapter(private val kategoriList: MutableList<ApiService.Kat
                     // Call the API to delete the category
                     GlobalScope.launch(Dispatchers.IO) {
                         try {
-                            val response = MoneyService.deleteKategori(deletedKategori.id_kategori)
+                            val response = MoneyService.deleteKategori(deletedKategori.id_kategori, "Bearer $token")
 
                             withContext(Dispatchers.Main) {
                                 if (response.isSuccessful) {

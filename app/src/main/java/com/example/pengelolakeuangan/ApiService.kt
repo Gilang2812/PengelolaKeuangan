@@ -38,12 +38,12 @@ interface ApiService {
     suspend fun getDaerah(): List<Daerah>
 
     @GET("kategori") // Ganti "kategori" dengan endpoint yang sesuai
-    suspend fun getKategori(): List<Kategori>
+    suspend fun getKategori(@Header("Authorization") authorization: String): List<Kategori>
     @POST("kategori")
-    suspend fun createKategori(@Body kategori: Kategori): Response<Kategori>
+    suspend fun createKategori(@Body kategori: Kategori, @Header("Authorization") authorization: String): Response<Kategori>
 
     @DELETE("kategori/{id_kategori}")
-    suspend fun deleteKategori(@Path("id_kategori") idKategori: String): Response<Unit>
+    suspend fun deleteKategori(@Path("id_kategori") idKategori: String, @Header("Authorization") authorization: String): Response<Unit>
 
 
     @GET("aset")
