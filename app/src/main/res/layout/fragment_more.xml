@@ -9,15 +9,17 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/headermore"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:background="#E9DCFE">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
             android:text="@string/title_more"
-            android:textSize="24sp"
-            android:layout_marginTop="15dp"/>
+            android:fontFamily="@font/poppinsmedium"
+            android:textSize="20sp" />
     </com.google.android.material.appbar.MaterialToolbar>
 
     <ListView
