@@ -22,10 +22,9 @@
             android:name=".Anggaran1Activity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
-            android:exported="true"
-            android:label="@string/title_activity_login"
-            android:theme="@style/Theme.PengelolaKeuangan" />
+            android:name=".MainActivity"
+            android:exported="false"
+/>
         <activity
             android:name=".EditPemasukanAcitivity"
             android:exported="false" />
@@ -42,8 +41,10 @@
             android:name=".PemasukanActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true" >
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.PengelolaKeuangan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
