@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.PopupWindow
 import android.widget.TimePicker
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pengelolakeuangan.adapter.Aset
 import com.example.pengelolakeuangan.adapter.AsetAdapter
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -59,7 +61,7 @@ class PemasukanActivity : AppCompatActivity() {
             showDateTimePicker()
         }
 
-        findViewById<View>(R.id.input_kategori).setOnClickListener {
+        findViewById<AutoCompleteTextView>(R.id.input_kategori).setOnClickListener {
             showListKategori(it)
         }
 
@@ -109,8 +111,13 @@ class PemasukanActivity : AppCompatActivity() {
                 if (!token.isNullOrBlank()) {
                     val response = MoneyService.getAset("bearer $token")
                     val adapter = AsetAdapter(response, this@PemasukanActivity)
+
+                    // Assuming recyclerView is defined somewhere in your activity layout
                     recyclerView.adapter = adapter
                     Log.d("aset", response.toString())
+
+                    // Show the popup window with the list of assets
+                    showPopupWindow(anchorView, response)
                 } else {
                     Snackbar.make(
                         anchorView,
@@ -122,31 +129,41 @@ class PemasukanActivity : AppCompatActivity() {
                 Log.e("AsetDialogFragment", "Error fetching aset: ${e.message}", e)
             }
         }
+    }
 
+    private fun showPopupWindow(anchorView: View, assets: List<Aset>) {
         val popupWindow = PopupWindow(this)
         val listView = layoutInflater.inflate(R.layout.fragment_asset_items, null)
         popupWindow.contentView = listView
-        popupWindow.width = ViewGroup.LayoutParams.WRAP_CONTENT
-        popupWindow.height = ViewGroup.LayoutParams.WRAP_CONTENT
+
+        // Set width to match parent and height to 2/5 of the screen height
+        val displayMetrics = resources.displayMetrics
+        val screenHeight = displayMetrics.heightPixels
+        val popupHeight = (screenHeight * 2 / 5)
+        popupWindow.width = ViewGroup.LayoutParams.MATCH_PARENT
+        popupWindow.height = popupHeight
+
+        // Set focusable and background
         popupWindow.isFocusable = true
 
-        // Setup adapter RecyclerView untuk listView
-        val adapter = AsetAdapter(emptyList(), this@PemasukanActivity)
+        // Setup adapter RecyclerView for listView
+        val adapter = AsetAdapter(assets, this@PemasukanActivity)
         listView.findViewById<RecyclerView>(R.id.list_asset).adapter = adapter
 
-        // Tetapkan item click listener jika diperlukan
+        // Set item click listener if needed
         adapter.setOnItemClickListener(object : AsetAdapter.OnItemClickListener {
-            override fun onItemClick(nama: String, idAset: String) {
-                // Tangani klik item di sini
-                // Sebagai contoh, Anda dapat menyembunyikan popup dan memperbarui TextInputEditText Anda
-                popupWindow.dismiss()
-                inputAset.setText(idAset)
+            override fun onItemClick(nama: String, id_Aset: String) {
+
+                var inputKategoti = findViewById<AutoCompleteTextView>(R.id.input_kategori)
+                inputKategoti.setText(id_Aset)
             }
         })
 
-        // Tampilkan popup window di bawah anchor view
-        popupWindow.showAsDropDown(anchorView, 0, 0, Gravity.BOTTOM)
+        // Show popup window below the anchor view
+        popupWindow.showAtLocation(anchorView, Gravity.BOTTOM, 0, 0)
     }
+
+
 
 
     private fun showListAset() {

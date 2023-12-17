@@ -112,13 +112,16 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/kategori">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:id="@+id/input_kategori"
                     android:layout_width="match_parent"
-                    android:paddingLeft="@dimen/padding_input"
                     android:layout_height="@dimen/input_height"
+                    android:inputType="none"
                     android:minHeight="40dp"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                    android:focusable="false"
+                    android:clickable="true"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck"/>
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -177,9 +180,5 @@
             tools:ignore="TextContrastCheck" />
 
     </LinearLayout>
-
-
-
-
 
 </LinearLayout>
