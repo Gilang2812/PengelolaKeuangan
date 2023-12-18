@@ -36,6 +36,7 @@ class DailyFragment : Fragment() {
                     val response = MoneyService.getTransaksi("Bearer $token")
                     val transaksiList = response
                     val adapter =TransaksiAdapter(transaksiList)
+                    adapter.setData(transaksiList)
                     recyclerView.adapter = adapter
                     Log.d("DailyFragment", response.toString())
                 } else {

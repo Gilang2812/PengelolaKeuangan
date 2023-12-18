@@ -6,7 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pengelolakeuangan.R
+import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class TransaksiAdapter(transaksiList: List<Transaksi>) : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
 
@@ -33,20 +36,77 @@ class TransaksiAdapter(transaksiList: List<Transaksi>) : RecyclerView.Adapter<Tr
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(transaksi: Transaksi) {
-            itemView.findViewById<TextView>(R.id.listpeng).text = transaksi.jumlah.toString()
-        }
-    }
-}
+            val kategoriNama = transaksi.Kategori?.nama ?: "Kategori Tidak Diketahui"
+            val asetNama = transaksi.Aset?.nama ?: "Aset Tidak Diketahui"
+            val jenisTransaksiNama = transaksi.JenisTransaksi?.nama ?: "Jenis Transaksi Tidak Diketahui"
 
+            // Format tanggal
+            val dateFormat = SimpleDateFormat("dd.MM", Locale.getDefault())
+            val tanggalFormatted = dateFormat.format(transaksi.tanggal)
+
+            itemView.findViewById<TextView>(R.id.tanggal).text = tanggalFormatted
+            itemView.findViewById<TextView>(R.id.listkategori).text = kategoriNama
+            itemView.findViewById<TextView>(R.id.listaset).text = asetNama
+            itemView.findViewById<TextView>(R.id.jenis).text = jenisTransaksiNama
+            itemView.findViewById<TextView>(R.id.jumlah).text = transaksi.jumlah.toString()
+        }
+
+    }
+
+}
+data class TransaksiResponse(
+    val data: TransaksiData,
+    val success: String
+)
+
+data class TransaksiData(
+    @SerializedName("created_at") val createdAt: Date,
+    @SerializedName("updated_at") val updatedAt: Date,
+    @SerializedName("id_transaksi") val idTransaksi: String,
+    @SerializedName("id_user") val idUser: String,
+    @SerializedName("id_kategori") val idKategori: String,
+    @SerializedName("id_jenis") val idJenis: String,
+    @SerializedName("id_aset") val idAset: String,
+    @SerializedName("tanggal") val tanggal: Date,
+    @SerializedName("jumlah") val jumlah: Int,
+    @SerializedName("note") val note: String
+)
 data class Transaksi(
+    @SerializedName("idTransaksi")
     val id_transaksi: String,
     val id_user: String,
     val id_kategori: String,
-    val id_jenis: String,
+    val id_jenis: Int,
     val id_aset: String,
     val tanggal: Date,
     val jumlah: Int,
     val note: String,
     val created_at: Date,
-    val updated_at: Date
+    val updated_at: Date,
+    val Kategori: Kategori?,
+    val Aset: AsetList?,
+    val JenisTransaksi: JenisTransaksi?
 )
+data class TransaksiRequest(
+    val id_kategori: String,
+    val id_jenis: String,
+    val id_aset: String,
+    val tanggal: String,
+    val jumlah: Int,
+    val note: String
+)
+
+data class Kategori(
+    val nama: String
+)
+
+data class AsetList(
+    val nama: String
+)
+
+data class JenisTransaksi(
+    val nama: String
+)
+
+
+

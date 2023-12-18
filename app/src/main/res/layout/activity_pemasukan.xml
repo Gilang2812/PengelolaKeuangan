@@ -37,6 +37,7 @@
                 android:outlineAmbientShadowColor="@color/black"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
                 tools:ignore="TouchTargetSizeCheck,ImageContrastCheck" />
 
@@ -55,7 +56,8 @@
         layout="@layout/content_pemasukan"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -2,6 +2,7 @@ package com.example.pengelolakeuangan
 
 import com.example.pengelolakeuangan.adapter.*
 import com.google.gson.annotations.SerializedName
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -45,11 +46,14 @@ interface ApiService {
     @DELETE("kategori/{id_kategori}")
     suspend fun deleteKategori(@Path("id_kategori") idKategori: String, @Header("Authorization") authorization: String): Response<Unit>
 
+    @GET("kategori")
+    suspend fun getPemasukanKategori(@Header("Authorization") authorization: String) : List<KategoriPemasukan>
 
     @GET("aset")
     suspend fun getAset(@Header("Authorization") authorization: String) : List<Aset>
-    @POST("users")
-    suspend fun createUser(@Body user: User): Response<User>
+
+    @POST("transaksi")
+    fun postTransaksi(@Body request: TransaksiRequest, @Header("Authorization") authorization: String): Call<TransaksiResponse>
 
     data class Kategori(
         @SerializedName("id_kategori")

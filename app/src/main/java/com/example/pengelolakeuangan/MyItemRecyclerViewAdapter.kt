@@ -1,13 +1,11 @@
 package com.example.pengelolakeuangan
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
-import com.example.pengelolakeuangan.placeholder.PlaceholderContent.PlaceholderItem
+import androidx.recyclerview.widget.RecyclerView
 import com.example.pengelolakeuangan.databinding.FragmentDailyBinding
+import com.example.pengelolakeuangan.placeholder.PlaceholderContent.PlaceholderItem
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
@@ -38,8 +36,8 @@ class MyItemRecyclerViewAdapter(
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(binding: FragmentDailyBinding) : RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.listName
-        val contentView: TextView = binding.listpem
+        val idView: TextView = binding.tanggal
+        val contentView: TextView = binding.jumlah
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"

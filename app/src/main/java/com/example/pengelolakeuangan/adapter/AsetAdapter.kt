@@ -31,7 +31,7 @@ class AsetAdapter(private var listAset: List<Aset>, private val listener: Pemasu
         val aset = listAset[position]
         holder.bind(aset)
         holder.itemView.setOnClickListener {
-            listener.onItemClick(aset.nama, aset.id_aset)
+            listener.onAsetItemClick(aset.nama)
         }
     }
     private var itemClickListener: OnItemClickListener? = null

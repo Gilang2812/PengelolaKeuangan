@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(MoreFragment())
                     return@setOnItemSelectedListener true
                 }
+                R.id.history -> {
+                    replaceFragment(ProfileFragment())
+                    return@setOnItemSelectedListener true
+                }
 
                 else -> false
             }

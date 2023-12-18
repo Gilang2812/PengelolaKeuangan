@@ -102,6 +102,7 @@
                     android:id="@+id/input_total"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/input_height"
+                    android:paddingLeft="@dimen/padding_input"
                     android:inputType="number"
                     android:minHeight="40dp"
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"/>
@@ -116,6 +117,7 @@
                     android:id="@+id/input_kategori"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/input_height"
+                    android:paddingLeft="@dimen/padding_input"
                     android:inputType="none"
                     android:minHeight="40dp"
                     android:focusable="false"
@@ -129,16 +131,16 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/asetText">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:id="@+id/input_aset"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
                     android:paddingLeft="@dimen/padding_input"
                     android:focusable="false"
-                    android:inputType="number"
+                    android:inputType="none"
                     android:minHeight="40dp"
-                    android:onClick="showListAset"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                    android:clickable="true"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -151,8 +153,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/input_height"
                     android:paddingLeft="@dimen/padding_input"
-                    android:text="123"
-                    android:inputType="datetime"
+                    android:text=""
+                    android:inputType="text"
                     android:minHeight="40dp"
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -177,7 +179,9 @@
             android:background="#00FF00"
             android:text="@string/tambah_pemasukan"
             android:textColor="#FFFFFF"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck"
+            android:onClick="tambahPemasukan"
+            />
 
     </LinearLayout>
 
