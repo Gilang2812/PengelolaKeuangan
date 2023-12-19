@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pengelolakeuangan.PemasukanActivity
 import com.example.pengelolakeuangan.R
 import java.util.Date
 
-class AsetAdapter(private var listAset: List<Aset>, private val listener: PemasukanActivity) :
-    RecyclerView.Adapter<AsetAdapter.ViewHolder>() {
+class AsetAdapter(
+    private var listAset: List<Aset>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<AsetAdapter.ViewHolder>() {
 
     fun setData(listAset: List<Aset>) {
         this.listAset = listAset
@@ -18,8 +19,8 @@ class AsetAdapter(private var listAset: List<Aset>, private val listener: Pemasu
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.fragment_aset_item_list, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.fragment_aset_item_list, parent, false)
         return ViewHolder(view)
     }
 
@@ -31,13 +32,8 @@ class AsetAdapter(private var listAset: List<Aset>, private val listener: Pemasu
         val aset = listAset[position]
         holder.bind(aset)
         holder.itemView.setOnClickListener {
-            listener.onAsetItemClick(aset.nama)
+            listener.onItemClick(aset.nama, aset.id_aset)
         }
-    }
-    private var itemClickListener: OnItemClickListener? = null
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        this.itemClickListener = listener
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

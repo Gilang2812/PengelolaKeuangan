@@ -18,73 +18,58 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pengelolakeuangan.adapter.Aset
 import com.example.pengelolakeuangan.adapter.AsetAdapter
-import com.example.pengelolakeuangan.adapter.KategoriAdapter
-import com.example.pengelolakeuangan.adapter.KategoriPemasukan
-import com.example.pengelolakeuangan.adapter.TransaksiRequest
+import com.example.pengelolakeuangan.adapter.KategoriPengeluaran
+
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class PemasukanActivity : AppCompatActivity() {
-
+class AddPengeluaranActivity : AppCompatActivity() {
     private val calendar = Calendar.getInstance()
+    private lateinit var token:String
     private lateinit var recyclerView: RecyclerView
-    private lateinit var token: String
-
-    private lateinit var tanggalInput: TextInputEditText
-    private lateinit var totalInput: AutoCompleteTextView
-    private lateinit var kategoriInput: AutoCompleteTextView
-    private lateinit var asetInput: AutoCompleteTextView
-    private lateinit var catatanInput: AutoCompleteTextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pemasukan)
+        setContentView(R.layout.activity_add_pengeluaran)
 
         val recycler = layoutInflater.inflate(R.layout.fragment_asset_items, null)
         recyclerView = recycler.findViewById(R.id.list_asset)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        token = SharedPreferencesUtil.retrieveTokenFromSharedPreferences(this).toString()
-        tanggalInput = findViewById(R.id.input_pemasukan)
-        totalInput = findViewById(R.id.input_total)
-        kategoriInput = findViewById(R.id.input_kategori)
-        asetInput = findViewById(R.id.input_aset)
-        catatanInput = findViewById(R.id.input_catatan)
 
+        token = SharedPreferencesUtil.retrieveTokenFromSharedPreferences(this).toString()
         try {
             val currentDate = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
 
+            val textInputLayout: TextInputLayout = findViewById(R.id.textTanggal)
+            val tanggalEditText: EditText = textInputLayout.findViewById(R.id.inputTanggalPeng)
 
-            val textInputLayout: TextInputLayout = findViewById(R.id.tanggalTextView)
-            val tanggalEditText: EditText = textInputLayout.findViewById(R.id.input_pemasukan)
-
-            tanggalEditText.setText("$currentDate")
+            tanggalEditText.setText(currentDate)
 
         } catch (e: Exception) {
             Log.e("Pemasukan Activity", "Terjadi kesalahan: ${e.message}", e)
         }
 
-        findViewById<View>(R.id.input_pemasukan).setOnClickListener {
-            showDateTimePicker()
+        findViewById<View>(R.id.inputTanggalPeng).setOnClickListener {
+            showDateTimePickerPeng()
         }
-
-        findViewById<AutoCompleteTextView>(R.id.input_kategori).setOnClickListener {
-            showListKategori(it)
-        }
-        findViewById<AutoCompleteTextView>(R.id.input_aset).setOnClickListener {
+        findViewById<AutoCompleteTextView>(R.id.input_aset_peng).setOnClickListener{
             showListAset(it)
         }
-    }
 
-    private fun showDateTimePicker() {
-        val inputPemasukan: EditText = findViewById(R.id.input_pemasukan)
+        findViewById<AutoCompleteTextView>(R.id.input_kategori_peng).setOnClickListener {
+            showListKategori(it)
+        }
+    }
+    fun onBackPressed(view: View) {
+        val intent = Intent(this@AddPengeluaranActivity, MainActivity::class.java)
+        startActivity(intent)
+    }
+    fun showDateTimePickerPeng() {
+        val inputPemasukan: EditText = findViewById(R.id.inputTanggalPeng)
 
         val datePickerDialog = DatePickerDialog(
             this,
@@ -158,13 +143,13 @@ class PemasukanActivity : AppCompatActivity() {
         popupWindow.isFocusable = true
 
         val adapter: RecyclerView.Adapter<*> = when (dataType) {
-            "kategori" -> {
-                KategoriAdapter(data as List<KategoriPemasukan>, this@PemasukanActivity)
-            }
+//            "kategori" -> {
+//
+//            }
             "aset" -> {
                 AsetAdapter(data as List<Aset>, object : AsetAdapter.OnItemClickListener {
                     override fun onItemClick(nama: String, id_aset: String) {
-                            onAsetItemClick(nama)
+                        onAsetItemClick(nama)
                         Log.d("AsetAdapter", "Item clicked: $nama, ID: $id_aset")
                     }
                 })
@@ -176,20 +161,19 @@ class PemasukanActivity : AppCompatActivity() {
 
         popupWindow.showAtLocation(anchorView, Gravity.BOTTOM, 0, 0)
     }
-
     fun onAsetItemClick(nama: String) {
-        val inputAset = findViewById<AutoCompleteTextView>(R.id.input_aset)
+        val inputAset = findViewById<AutoCompleteTextView>(R.id.input_aset_peng)
         inputAset.setText(nama)
-        Log.d("PemasukanActivity", "Item clicked2: $nama")
+        Log.d("PengeluaranActivity", "Item clicked2: $nama")
     }
 
     private fun showListKategori(anchorView: View) {
         lifecycleScope.launch {
             try {
                 if (!token.isNullOrBlank()) {
-                    val response = MoneyService.getPemasukanKategori("bearer $token")
-                    val adapter = KategoriAdapter(response, this@PemasukanActivity)
-                    recyclerView.layoutManager = LinearLayoutManager(this@PemasukanActivity)
+                    val response = MoneyService.getPengeluaranKategori("bearer $token")
+                    val adapter = KategoriPengeluaran(response, this@AddPengeluaranActivity)
+                    recyclerView.layoutManager = LinearLayoutManager(this@AddPengeluaranActivity)
                     recyclerView.adapter = adapter
                     showPopupWindow(anchorView, response, "kategori")
                 } else {
@@ -204,60 +188,10 @@ class PemasukanActivity : AppCompatActivity() {
             }
         }
     }
-
     fun onKategoriItemClick(nama: String) {
         val inputKategori = findViewById<AutoCompleteTextView>(R.id.input_kategori)
         inputKategori.setText(nama)
         Log.d("PemasukanActivity", "Item clicked2: $nama")
     }
 
-    fun tambahPemasukan(view: View) {
-        val tanggal = tanggalInput.text.toString()
-        val total = totalInput.text.toString().toInt()
-        val kategori = kategoriInput.text.toString()
-        val aset = asetInput.text.toString()
-        val catatan = catatanInput.text.toString()
-
-        val transaksiRequest = TransaksiRequest(
-            id_kategori = kategori,
-            id_jenis = "1",
-            id_aset = aset,
-            tanggal = tanggal,
-            jumlah = total,
-            note = catatan
-        )
-
-        // Lanjutkan dengan mengirimkan transaksiRequest ke server seperti sebelumnya
-        postTransaksi(transaksiRequest,token)
-    }
-    private fun postTransaksi(transaksiRequest: TransaksiRequest, authToken:String) {
-
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                val response = MoneyService.postTransaksi(transaksiRequest, "Bearer $authToken").execute()
-
-                withContext(Dispatchers.Main) {
-                    if (response.isSuccessful) {
-                        val transaksiResponse = response.body()
-
-                        val intent = Intent(this@PemasukanActivity, MainActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        Log.e("PostTransaksi", "Gagal: ${response.code()}, ${response.errorBody()?.string()}")
-
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Log.e("PostTransaksi", "Exception: ${e.message}")
-            }
-        }
-    }
-
-    fun onBackPressed(view: View) {
-        val intent = Intent(this@PemasukanActivity, MainActivity::class.java)
-        startActivity(intent)
-    }
 }
-
-

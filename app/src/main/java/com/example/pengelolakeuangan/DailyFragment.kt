@@ -34,9 +34,8 @@ class DailyFragment : Fragment() {
                 if (!token.isNullOrBlank()) {
                     // Call getTransaksi with Authorization header
                     val response = MoneyService.getTransaksi("Bearer $token")
-                    val transaksiList = response
-                    val adapter =TransaksiAdapter(transaksiList)
-                    adapter.setData(transaksiList)
+                    val adapter = TransaksiAdapter(response)
+                    adapter.setData(response)
                     recyclerView.adapter = adapter
                     Log.d("DailyFragment", response.toString())
                 } else {
@@ -74,6 +73,14 @@ class DailyFragment : Fragment() {
                 }
                 R.id.menu_pengeluaran -> {
                     Snackbar.make(requireView(), "Pengeluaran clicked", Snackbar.LENGTH_SHORT).show()
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        try {
+                            val intent = Intent(requireContext(), AddPengeluaranActivity::class.java)
+                            startActivity(intent)
+                        } catch (e: Exception) {
+                            Snackbar.make(requireView(), "Error: ${e.message}", Snackbar.LENGTH_SHORT).show()
+                        }
+                    }
                     true
                 }
                 else -> false

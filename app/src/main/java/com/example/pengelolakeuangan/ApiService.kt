@@ -46,9 +46,10 @@ interface ApiService {
     @DELETE("kategori/{id_kategori}")
     suspend fun deleteKategori(@Path("id_kategori") idKategori: String, @Header("Authorization") authorization: String): Response<Unit>
 
-    @GET("kategori")
+    @GET("katpemasukan")
     suspend fun getPemasukanKategori(@Header("Authorization") authorization: String) : List<KategoriPemasukan>
-
+    @GET("katpemasukan")
+    suspend fun getPengeluaranKategori(@Header("Authorization") authorization: String) : List<KatPengeluaran>
     @GET("aset")
     suspend fun getAset(@Header("Authorization") authorization: String) : List<Aset>
 
