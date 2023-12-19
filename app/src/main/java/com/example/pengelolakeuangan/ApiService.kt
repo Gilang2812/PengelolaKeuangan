@@ -48,7 +48,7 @@ interface ApiService {
 
     @GET("katpemasukan")
     suspend fun getPemasukanKategori(@Header("Authorization") authorization: String) : List<KategoriPemasukan>
-    @GET("katpemasukan")
+    @GET("katpengeluaran")
     suspend fun getPengeluaranKategori(@Header("Authorization") authorization: String) : List<KatPengeluaran>
     @GET("aset")
     suspend fun getAset(@Header("Authorization") authorization: String) : List<Aset>

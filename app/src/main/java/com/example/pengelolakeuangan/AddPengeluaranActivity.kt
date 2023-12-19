@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pengelolakeuangan.adapter.Aset
 import com.example.pengelolakeuangan.adapter.AsetAdapter
+import com.example.pengelolakeuangan.adapter.KatPengeluaran
 import com.example.pengelolakeuangan.adapter.KategoriPengeluaran
 
 import com.google.android.material.snackbar.Snackbar
@@ -143,9 +144,7 @@ class AddPengeluaranActivity : AppCompatActivity() {
         popupWindow.isFocusable = true
 
         val adapter: RecyclerView.Adapter<*> = when (dataType) {
-//            "kategori" -> {
-//
-//            }
+            "kategori" -> KategoriPengeluaran( data as List<KatPengeluaran>, this@AddPengeluaranActivity)
             "aset" -> {
                 AsetAdapter(data as List<Aset>, object : AsetAdapter.OnItemClickListener {
                     override fun onItemClick(nama: String, id_aset: String) {
@@ -189,7 +188,7 @@ class AddPengeluaranActivity : AppCompatActivity() {
         }
     }
     fun onKategoriItemClick(nama: String) {
-        val inputKategori = findViewById<AutoCompleteTextView>(R.id.input_kategori)
+        val inputKategori = findViewById<AutoCompleteTextView>(R.id.input_kategori_peng)
         inputKategori.setText(nama)
         Log.d("PemasukanActivity", "Item clicked2: $nama")
     }
