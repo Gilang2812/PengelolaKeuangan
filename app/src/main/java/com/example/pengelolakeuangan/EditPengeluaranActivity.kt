@@ -8,6 +8,7 @@
     import android.util.Log
     import android.view.View
     import android.widget.AutoCompleteTextView
+    import android.widget.Button
     import android.widget.EditText
     import android.widget.TimePicker
     import androidx.appcompat.app.AppCompatActivity
@@ -15,19 +16,14 @@
     import androidx.recyclerview.widget.LinearLayoutManager
     import androidx.recyclerview.widget.RecyclerView
     import com.example.pengelolakeuangan.adapter.PengeluaranUtil
-    import com.example.pengelolakeuangan.adapter.TransaksiRequest
+    import com.example.pengelolakeuangan.adapter.PengeluaranUtil.updateTransaksi
     import com.google.android.material.textfield.TextInputEditText
-    import com.google.android.material.textfield.TextInputLayout
-    import kotlinx.coroutines.Dispatchers
-    import kotlinx.coroutines.GlobalScope
     import kotlinx.coroutines.launch
-    import kotlinx.coroutines.withContext
     import java.text.SimpleDateFormat
     import java.util.Calendar
-    import java.util.Date
     import java.util.Locale
 
-    class AddPengeluaranActivity : AppCompatActivity() {
+    class EditPengeluaranActivity : AppCompatActivity() {
         private val calendar = Calendar.getInstance()
         private lateinit var token: String
         private lateinit var recyclerView: RecyclerView
@@ -37,62 +33,75 @@
         private lateinit var kategoriInput: AutoCompleteTextView
         private lateinit var asetInput: AutoCompleteTextView
         private lateinit var catatanInput: AutoCompleteTextView
-
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_add_pengeluaran)
-
+            setContentView(R.layout.activity_edit_pengeluaran)
+            token = SharedPreferencesUtil.retrieveTokenFromSharedPreferences(this).toString()
             val recycler = layoutInflater.inflate(R.layout.fragment_asset_items, null)
             recyclerView = recycler.findViewById(R.id.list_asset)
             recyclerView.layoutManager = LinearLayoutManager(this)
 
-            tanggalInput = findViewById(R.id.inputTanggalPeng)
-            totalInput = findViewById(R.id.input_totalPeng)
+            val intent = intent
+            val transaksiId = intent.getStringExtra("transaksiId")
+            val tanggalString = intent.getStringExtra("tanggal")
+            val kategori = intent.getStringExtra("kategori") ?: "Kategori Tidak Diketahui"
+            val aset = intent.getStringExtra("aset")
+            val total = intent.getIntExtra("total", 0)
+            val note = intent.getStringExtra("note")
+
+            // Parsing tanggal kembali ke objek Date
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+            val tanggal = dateFormat.parse(tanggalString)
+            val dateFormatOutput = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+            val tanggalFormatted = dateFormatOutput.format(tanggal)
+            tanggalInput = findViewById(R.id.edit_tanggal)
+            totalInput = findViewById(R.id.edit_total)
             kategoriInput = findViewById(R.id.input_kategori_peng)
             asetInput = findViewById(R.id.input_aset_peng)
-            catatanInput = findViewById(R.id.input_catatan_peng)
+            catatanInput = findViewById(R.id.edit_note)
 
-            token = SharedPreferencesUtil.retrieveTokenFromSharedPreferences(this).toString()
-            try {
-                val currentDate = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
-
-                val textInputLayout: TextInputLayout = findViewById(R.id.textTanggal)
-                val tanggalEditText: EditText = textInputLayout.findViewById(R.id.inputTanggalPeng)
-
-                tanggalEditText.setText(currentDate)
-
-            } catch (e: Exception) {
-                Log.e("Pemasukan Activity", "Terjadi kesalahan: ${e.message}", e)
-            }
-
-            findViewById<View>(R.id.inputTanggalPeng).setOnClickListener {
+            tanggalInput.setText(tanggalFormatted.toString())
+            totalInput.setText(total.toString())
+            kategoriInput.setText(kategori)
+            asetInput.setText(aset)
+            catatanInput.setText(note)
+            var edittanggal = tanggalInput.text.toString()
+            var edittotal = totalInput.text.toString().toIntOrNull()
+            var editkategori=kategoriInput.text.toString()
+            var editaset= asetInput.text.toString()
+            var editnote = catatanInput.text.toString()
+            tanggalInput.setOnClickListener{
                 showDateTimePickerPeng()
             }
-
-            findViewById<AutoCompleteTextView>(R.id.input_aset_peng).setOnClickListener {
+            asetInput.setOnClickListener {
                 lifecycleScope.launch {
-                    PengeluaranUtil.showListAset(this@AddPengeluaranActivity, recyclerView, token) { nama, idAset ->
-                        onAsetItemClick(this@AddPengeluaranActivity, nama)
+                    PengeluaranUtil.showListAset(this@EditPengeluaranActivity, recyclerView, token) { nama, idAset ->
+                        onAsetItemClick(this@EditPengeluaranActivity, nama)
                     }
                 }
             }
 
-            findViewById<AutoCompleteTextView>(R.id.input_kategori_peng).setOnClickListener {
+            kategoriInput.setOnClickListener {
                 lifecycleScope.launch {
-                    PengeluaranUtil.showListKategori(this@AddPengeluaranActivity, recyclerView, token,){ nama ->
-                        onKategoriItemClick(this@AddPengeluaranActivity, nama)
+                    PengeluaranUtil.showListKategori(this@EditPengeluaranActivity, recyclerView, token,){ nama ->
+                        onKategoriItemClick(this@EditPengeluaranActivity, nama)
                     }
+                }
+            }
+
+            findViewById<Button>(R.id.simpanTransaksi).setOnClickListener {
+                if (edittotal != null) {
+                    updateTransaksi(this@EditPengeluaranActivity,token,transaksiId.toString(),edittanggal,edittotal,editkategori,editaset,editnote)
                 }
             }
         }
-
         fun onBackPressed(view: View) {
-            val intent = Intent(this@AddPengeluaranActivity, MainActivity::class.java)
+            val intent = Intent(this@EditPengeluaranActivity, MainActivity::class.java)
             startActivity(intent)
         }
 
         fun showDateTimePickerPeng() {
-            val inputPemasukan: EditText = findViewById(R.id.inputTanggalPeng)
+            val inputPemasukan: EditText = findViewById(R.id.edit_tanggal)
 
             val datePickerDialog = DatePickerDialog(
                 this,
@@ -123,51 +132,6 @@
             )
             datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
             datePickerDialog.show()
-        }
-
-        fun tambahPengeluaran(view: View) {
-            val tanggal = tanggalInput.text.toString()
-            val total = totalInput.text.toString().toInt()
-            val kategori = kategoriInput.text.toString()
-            val aset = asetInput.text.toString()
-            val catatan = catatanInput.text.toString()
-
-            val transaksiRequest = TransaksiRequest(
-                id_kategori = kategori,
-                id_jenis = "2",
-                id_aset = aset,
-                tanggal = tanggal,
-                jumlah = total,
-                note = catatan
-            )
-
-            postTransaksi(transaksiRequest, token)
-        }
-
-        private fun postTransaksi(transaksiRequest: TransaksiRequest, authToken: String) {
-            GlobalScope.launch(Dispatchers.IO) {
-                try {
-                    val response =
-                        MoneyService.postTransaksi(transaksiRequest, "Bearer $authToken").execute()
-
-                    withContext(Dispatchers.Main) {
-                        if (response.isSuccessful) {
-                            val transaksiResponse = response.body()
-
-                            val intent = Intent(this@AddPengeluaranActivity, MainActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            Log.e(
-                                "PostTransaksi",
-                                "Gagal: ${response.code()}, ${response.errorBody()?.string()}"
-                            )
-                        }
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    Log.e("PostTransaksi", "Exception: ${e.message}")
-                }
-            }
         }
 
         private fun onAsetItemClick(context: Context, nama: Any) {

@@ -1,10 +1,14 @@
 package com.example.pengelolakeuangan.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pengelolakeuangan.EditPemasukanActivity
+import com.example.pengelolakeuangan.EditPengeluaranActivity
+import com.example.pengelolakeuangan.MainActivity
 import com.example.pengelolakeuangan.R
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
@@ -28,6 +32,28 @@ class TransaksiAdapter(transaksiList: List<Transaksi>) : RecyclerView.Adapter<Tr
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val transaksi = transaksiList[position]
         holder.bind(transaksi)
+
+        holder.itemView.setOnClickListener {
+            val  context = holder.itemView.context
+
+            val intent: Intent = when (transaksi.id_jenis) {
+                1 -> Intent(context, EditPemasukanActivity::class.java)
+                2 -> Intent(context, EditPengeluaranActivity::class.java)
+                else -> Intent(context, MainActivity::class.java)
+            }
+
+            intent.putExtra("transaksiId", transaksi.id_transaksi)
+
+            // Format tanggal sesuai dengan "yyyy-MM-dd HH:mm"
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+            intent.putExtra("tanggal", dateFormat.format(transaksi.tanggal))
+            intent.putExtra("kategori", transaksi.Kategori?.nama ?: "Kategori Tidak Diketahui")
+            intent.putExtra("aset", transaksi.Aset?.nama ?: "Aset Tidak Diketahui")
+            intent.putExtra("total", transaksi.jumlah)
+            intent.putExtra("note", transaksi.note)
+
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -72,7 +98,7 @@ data class TransaksiData(
     @SerializedName("note") val note: String
 )
 data class Transaksi(
-    @SerializedName("idTransaksi")
+    @SerializedName("id_transaksi")
     val id_transaksi: String,
     val id_user: String,
     val id_kategori: String,
@@ -95,7 +121,13 @@ data class TransaksiRequest(
     val jumlah: Int,
     val note: String
 )
-
+data class UpdateTransaksiRequest(
+    val id_kategori: String,
+    val id_aset: String,
+    val tanggal: String,
+    val jumlah: Int,
+    val note: String
+)
 data class Kategori(
     val nama: String
 )

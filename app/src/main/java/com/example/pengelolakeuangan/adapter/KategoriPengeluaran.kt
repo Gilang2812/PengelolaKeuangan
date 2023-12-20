@@ -5,13 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pengelolakeuangan.AddPengeluaranActivity
 import com.example.pengelolakeuangan.R
 import com.google.gson.annotations.SerializedName
 
 class KategoriPengeluaran(
         private val kategoriPengeluaranList: List<KatPengeluaran>,
-        private val activity: AddPengeluaranActivity
+        private val itemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<KategoriPengeluaran.ViewHolder>() {
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -20,9 +19,9 @@ class KategoriPengeluaran(
                 fun bind(katPenge: KatPengeluaran) {
                         nameTextView.text = katPenge.nama
                 }
-
-
         }
+
+
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
                 val inflater = LayoutInflater.from(parent.context)
@@ -35,12 +34,16 @@ class KategoriPengeluaran(
 
                 holder.bind(currentKategori)
                 holder.itemView.setOnClickListener {
-                        activity.onKategoriItemClick(currentKategori.nama)
+                        itemClickListener.onItemClick(currentKategori.nama)
                 }
         }
 
         override fun getItemCount(): Int {
                 return kategoriPengeluaranList.size
+        }
+        interface OnItemClickListener {
+                fun onItemClick(nama: String)
+
         }
 }
 

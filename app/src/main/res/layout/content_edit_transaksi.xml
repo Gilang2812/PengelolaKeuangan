@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--content_pemasukan.xml-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/gray"
-    android:orientation="vertical"
-    >
-
+    android:orientation="vertical">
     <LinearLayout
+        android:id="@+id/input_area"
         android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,13 +17,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:boxStrokeColor="@color/color_pemasukan_tex"
         >
+
         <LinearLayout
             android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:orientation="vertical">
             <TextView
-                android:id="@+id/tanggalPeng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_pemasukan_tex"
@@ -32,7 +32,6 @@
                 android:layout_marginBottom="@dimen/margin_pemasukan"
                 />
             <TextView
-                android:id="@+id/totalPeng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_pemasukan_tex"
@@ -40,17 +39,15 @@
                 android:layout_marginTop="@dimen/margin_pemasukan"
                 android:layout_marginBottom="@dimen/margin_pemasukan"
                 />
-
             <TextView
-                android:id="@+id/kategoriPeng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/color_pemasukan_tex"
+                android:text="@string/Kategori"
                 android:layout_marginTop="@dimen/margin_pemasukan"
                 android:layout_marginBottom="@dimen/margin_pemasukan"
-                android:text="@string/Kategori"
-                android:textColor="@color/color_pemasukan_tex" />
+                />
             <TextView
-                android:id="@+id/asetPeng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_pemasukan_tex"
@@ -59,7 +56,6 @@
                 android:layout_marginBottom="@dimen/margin_pemasukan"
                 />
             <TextView
-                android:id="@+id/notePeng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_pemasukan_tex"
@@ -69,49 +65,53 @@
                 />
 
 
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textTanggal">
+                android:id="@+id/tanggalTextView"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputTanggalPeng"
+                    android:id="@+id/edit_tanggal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_input"
                     android:backgroundTint="@color/gray"
                     android:focusable="false"
                     android:inputType="none"
                     android:minHeight="40dp"
-                    android:onClick="showDateTimePickerPeng"
-                    android:paddingLeft="@dimen/padding_input"
-                    android:text=""
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    android:onClick="showDateTimePicker"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textTotal">
+                android:id="@+id/TotalText"
+                tools:ignore="ExtraText">
 
                 <AutoCompleteTextView
-                    android:id="@+id/input_totalPeng"
+                    android:id="@+id/edit_total"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/input_height"
                     android:paddingLeft="@dimen/padding_input"
                     android:inputType="number"
                     android:minHeight="40dp"
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"/>
-
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textkategoriPeng">
+                android:id="@+id/kategori">
 
                 <AutoCompleteTextView
                     android:id="@+id/input_kategori_peng"
@@ -125,6 +125,7 @@
                     tools:ignore="LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -141,13 +142,14 @@
                     android:clickable="true"
                     tools:ignore="LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck"/>
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/catatanText">
 
                 <AutoCompleteTextView
-                    android:id="@+id/input_catatan_peng"
+                    android:id="@+id/edit_note"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/input_height"
                     android:paddingLeft="@dimen/padding_input"
@@ -158,22 +160,38 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
+
+
     </LinearLayout>
-    <RelativeLayout
+
+    <LinearLayout
+        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
         android:background="@color/white"
-        android:paddingTop="20dp"
-        android:layout_marginTop="20dp"
-        >
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/input_area">
 
         <Button
+            android:id="@+id/hapusTransaksi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FF00"
+            android:text="@string/hapus"
+            android:textColor="#FFFFFF"
+            tools:ignore="TextContrastCheck"
+            />
+        <Button
+            android:id="@+id/simpanTransaksi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#00FF00"
-            android:onClick="tambahPengeluaran"
-            android:text="@string/tambah_pemasukan"
+            android:text="@string/simpan"
             android:textColor="#FFFFFF"
-            tools:ignore="TextContrastCheck" />
-    </RelativeLayout>
+            tools:ignore="TextContrastCheck"
+            android:layout_marginLeft="20dp"
+            />
+    </LinearLayout>
+
 </LinearLayout>

@@ -70,4 +70,6 @@
     <string name="tambahkategorincome">Tambah Kategori Income</string>
     <string name="incomekat">Income Category</string>
     <string name="category">Category</string>
+    <string name="hapus">hapus</string>
+    <string name="simpan">simpan</string>
 </resources>

@@ -10,13 +10,15 @@ import java.util.Date
 
 class AsetAdapter(
     private var listAset: List<Aset>,
-    private val listener: OnItemClickListener
+    private val itemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<AsetAdapter.ViewHolder>() {
 
     fun setData(listAset: List<Aset>) {
         this.listAset = listAset
         notifyDataSetChanged()
     }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -32,7 +34,7 @@ class AsetAdapter(
         val aset = listAset[position]
         holder.bind(aset)
         holder.itemView.setOnClickListener {
-            listener.onItemClick(aset.nama, aset.id_aset)
+            itemClickListener.onItemClick(aset.nama, aset.id_aset)
         }
     }
 
@@ -46,6 +48,7 @@ class AsetAdapter(
 
     interface OnItemClickListener {
         fun onItemClick(nama: String, id_aset: String)
+
     }
 }
 

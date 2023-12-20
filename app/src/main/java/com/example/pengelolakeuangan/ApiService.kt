@@ -48,6 +48,8 @@ interface ApiService {
 
     @GET("katpemasukan")
     suspend fun getPemasukanKategori(@Header("Authorization") authorization: String) : List<KategoriPemasukan>
+    @GET("katpemasukan")
+    suspend fun getEditKategori(@Header("Authorization") authorization: String) : List<KatPengeluaran>
     @GET("katpengeluaran")
     suspend fun getPengeluaranKategori(@Header("Authorization") authorization: String) : List<KatPengeluaran>
     @GET("aset")
@@ -56,6 +58,12 @@ interface ApiService {
     @POST("transaksi")
     fun postTransaksi(@Body request: TransaksiRequest, @Header("Authorization") authorization: String): Call<TransaksiResponse>
 
+    @PUT("transaksi/{transaksiId}")
+    fun updateTransaksi(
+        @Path("transaksiId") transaksiId: String,
+        @Body transaksiRequest: UpdateTransaksiRequest,
+        @Header("Authorization") authToken: String
+    ): Call<TransaksiResponse>
     data class Kategori(
         @SerializedName("id_kategori")
         val id_kategori: String,

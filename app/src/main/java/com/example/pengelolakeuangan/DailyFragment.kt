@@ -51,6 +51,7 @@ class DailyFragment : Fragment() {
         fab.setOnClickListener { showPopupMenu() }
 
         return view
+
     }
 
     private fun showPopupMenu() {
