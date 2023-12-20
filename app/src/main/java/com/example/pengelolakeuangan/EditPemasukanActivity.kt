@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AutoCompleteTextView
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
@@ -65,6 +66,12 @@ class EditPemasukanActivity : AppCompatActivity() {
         asetInput.setText(aset)
         catatanInput.setText(note)
 
+        var edittanggal = tanggalInput.text.toString()
+        var edittotal = totalInput.text.toString().toIntOrNull()
+        var editkategori=kategoriInput.text.toString()
+        var editaset= asetInput.text.toString()
+        var editnote = catatanInput.text.toString()
+
         tanggalInput.setOnClickListener{
             showDateTimePickerPeng()
         }
@@ -81,6 +88,23 @@ class EditPemasukanActivity : AppCompatActivity() {
                     onKategoriItemClick(this@EditPemasukanActivity, nama)
                 }
             }
+        }
+        findViewById<Button>(R.id.simpanTransaksi).setOnClickListener {
+            if (edittotal != null) {
+                PengeluaranUtil.updateTransaksi(
+                    this@EditPemasukanActivity,
+                    token,
+                    transaksiId.toString(),
+                    edittanggal,
+                    edittotal,
+                    editkategori,
+                    editaset,
+                    editnote
+                )
+            }
+        }
+        findViewById<Button>(R.id.hapusTransaksi).setOnClickListener {
+            PengeluaranUtil.deleteTransaksi(this@EditPemasukanActivity,token,transaksiId.toString())
         }
     }
     fun onBackPressed(view: View) {

@@ -73,5 +73,10 @@ interface ApiService {
         val updated_at: Date
     )
 
+    @DELETE("transaksi/{transaksiId}")
+    fun deleteTransaksi(
+        @Path("transaksiId") transaksiId: String,
+        @Header("Authorization") authorization: String
+    ): Call<DeleteTransaksiResponse>
 
 }

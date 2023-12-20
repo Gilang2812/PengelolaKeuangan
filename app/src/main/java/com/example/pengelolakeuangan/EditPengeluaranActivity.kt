@@ -94,6 +94,10 @@
                     updateTransaksi(this@EditPengeluaranActivity,token,transaksiId.toString(),edittanggal,edittotal,editkategori,editaset,editnote)
                 }
             }
+
+            findViewById<Button>(R.id.hapusTransaksi).setOnClickListener {
+                PengeluaranUtil.deleteTransaksi(this@EditPengeluaranActivity,token,transaksiId.toString())
+            }
         }
         fun onBackPressed(view: View) {
             val intent = Intent(this@EditPengeluaranActivity, MainActivity::class.java)

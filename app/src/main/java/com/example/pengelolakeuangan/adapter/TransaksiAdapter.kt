@@ -139,6 +139,10 @@ data class AsetList(
 data class JenisTransaksi(
     val nama: String
 )
+data class DeleteTransaksiResponse(
+    val success: String
+)
+
 
 
 

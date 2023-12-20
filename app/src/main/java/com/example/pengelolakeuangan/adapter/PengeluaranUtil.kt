@@ -213,4 +213,47 @@ object PengeluaranUtil {
             }
         }
     }
+
+    fun deleteTransaksi(
+        context: Context,
+        token: String,
+        transaksiId: String
+    ) {
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val response = MoneyService.deleteTransaksi(transaksiId, "Bearer $token").execute()
+
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        // Handle the successful deletion
+                        Log.d("DeleteTransaksi", "Transaksi deleted successfully")
+
+                        val intent = Intent(context, MainActivity::class.java)
+                        context.startActivity(intent)
+                    } else {
+                        Log.e(
+                            "DeleteTransaksi",
+                            "Gagal: ${response.code()}, ${response.errorBody()?.string()}"
+                        )
+                        Toast.makeText(
+                            context,
+                            "Gagal menghapus transaksi. Silakan coba lagi. ${response.errorBody()?.string()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("DeleteTransaksi", "Exception: ${e.message}")
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        "Terjadi kesalahan. Silakan coba lagi. ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
 }
