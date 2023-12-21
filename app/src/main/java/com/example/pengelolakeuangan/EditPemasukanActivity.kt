@@ -66,15 +66,11 @@ class EditPemasukanActivity : AppCompatActivity() {
         asetInput.setText(aset)
         catatanInput.setText(note)
 
-        var edittanggal = tanggalInput.text.toString()
-        var edittotal = totalInput.text.toString().toIntOrNull()
-        var editkategori=kategoriInput.text.toString()
-        var editaset= asetInput.text.toString()
-        var editnote = catatanInput.text.toString()
 
         tanggalInput.setOnClickListener{
             showDateTimePickerPeng()
         }
+
         asetInput.setOnClickListener {
             lifecycleScope.launch {
                 PengeluaranUtil.showListAset(this@EditPemasukanActivity, recyclerView, token) { nama, idAset ->
@@ -90,6 +86,12 @@ class EditPemasukanActivity : AppCompatActivity() {
             }
         }
         findViewById<Button>(R.id.simpanTransaksi).setOnClickListener {
+            val edittanggal = findViewById<TextInputEditText>(R.id.edit_tanggal).text.toString()
+            val edittotal = findViewById<AutoCompleteTextView>(R.id.edit_total).text.toString().toIntOrNull()
+            val editkategori = findViewById<AutoCompleteTextView>(R.id.input_kategori_peng).text.toString()
+            val editaset = findViewById<AutoCompleteTextView>(R.id.input_aset_peng).text.toString()
+            val editnote = findViewById<AutoCompleteTextView>(R.id.edit_note).text.toString()
+
             if (edittotal != null) {
                 PengeluaranUtil.updateTransaksi(
                     this@EditPemasukanActivity,
