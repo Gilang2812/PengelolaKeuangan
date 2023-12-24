@@ -32,6 +32,9 @@
             android:name=".EditPemasukanAcitivity"
             android:exported="false" />
         <activity
+            android:name=".AssetActivity"
+            android:exported="false" />
+        <activity
             android:name=".ExpensescategoryActivity"
             android:exported="false" />
         <activity
