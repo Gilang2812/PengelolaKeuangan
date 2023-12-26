@@ -45,7 +45,7 @@ class  activity_kategori : AppCompatActivity() {
                     // Example: startActivity(Intent(this, IncomeCategorySettingActivity::class.java))
                 }
                 1 -> {
-                    startActivity(Intent(this, ExpensescategoryActivity::class.java))
+                    startActivity(Intent(this, ExpensesCategoryActivity::class.java))
                     // Handle Expenses Category Setting click
                     // Example: startActivity(Intent(this, ExpensesCategorySettingActivity::class.java))
                 }

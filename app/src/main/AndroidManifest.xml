@@ -40,7 +40,7 @@
             android:name=".EditPemasukanAcitivity"
             android:exported="false" />
         <activity
-            android:name=".ExpensescategoryActivity"
+            android:name=".ExpensesCategoryActivity"
             android:exported="false" />
         <activity
             android:name=".IncomeCategoryActivity"

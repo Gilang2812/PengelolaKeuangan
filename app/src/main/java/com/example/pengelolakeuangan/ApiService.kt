@@ -46,6 +46,14 @@ interface ApiService {
     @DELETE("kategori/{id_kategori}")
     suspend fun deleteKategori(@Path("id_kategori") idKategori: String, @Header("Authorization") authorization: String): Response<Unit>
 
+    @PUT("kategori/{id_kategori}")
+    suspend fun updateKategori(
+        @Path("id_kategori") idKategori: String,
+        @Body kategori: Kategori,
+        @Header("Authorization") authorization: String
+    ): Response<Kategori>
+
+
     @GET("katpemasukan")
     suspend fun getPemasukanKategori(@Header("Authorization") authorization: String) : List<KategoriPemasukan>
     @GET("katpemasukan")
@@ -68,7 +76,7 @@ interface ApiService {
         @SerializedName("id_kategori")
         val id_kategori: String,
         val id_jenis: String,
-        val nama: String,
+        var nama: String,
         val created_at: Date,
         val updated_at: Date
     )

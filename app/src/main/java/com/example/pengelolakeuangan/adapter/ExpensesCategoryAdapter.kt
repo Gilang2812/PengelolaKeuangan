@@ -18,11 +18,11 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class IncomeCategoryAdapter(private val kategoriList: MutableList<ApiService.Kategori>) :
-    RecyclerView.Adapter<IncomeCategoryAdapter.ViewHolder>() {
+class ExpensesCategoryAdapter(private val kategoriList: MutableList<ApiService.Kategori>) :
+    RecyclerView.Adapter<ExpensesCategoryAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textViewItemIncome: TextView = itemView.findViewById(R.id.textViewItemincome)
+        val textViewItemExpense: TextView = itemView.findViewById(R.id.textViewItemExpense)
         val imageViewHapus: ImageView = itemView.findViewById(R.id.hapus)
         val imageViewEdit: ImageView = itemView.findViewById(R.id.edit)
 
@@ -50,12 +50,12 @@ class IncomeCategoryAdapter(private val kategoriList: MutableList<ApiService.Kat
                                     notifyItemRemoved(position)
                                 } else {
                                     // Handle the error, e.g., show a toast or log the error
-                                    Log.e("IncomeCategoryAdapter", "Error: ${response.message()}")
+                                    Log.e("ExpensesCategoryAdapter", "Error: ${response.message()}")
                                 }
                             }
                         } catch (e: Exception) {
                             // Handle error, e.g., show a toast or log the error
-                            Log.e("IncomeCategoryAdapter", "Error: ${e.message}", e)
+                            Log.e("ExpensesCategoryAdapter", "Error: ${e.message}", e)
                         }
                     }
                 }
@@ -69,10 +69,8 @@ class IncomeCategoryAdapter(private val kategoriList: MutableList<ApiService.Kat
         }
 
         // Function to handle the edit dialog
-        // Function to handle the edit dialog
-        // Function to handle the edit dialog
         private fun handleEditDialog() {
-            val view = LayoutInflater.from(itemView.context).inflate(R.layout.activity_tambahincome, null)
+            val view = LayoutInflater.from(itemView.context).inflate(R.layout.activity_tambahexpenses, null)
             val kategoriEdit = view.findViewById<EditText>(R.id.kategoriEdit)
 
             // Get the position of the clicked item
@@ -115,12 +113,12 @@ class IncomeCategoryAdapter(private val kategoriList: MutableList<ApiService.Kat
                                             notifyItemChanged(position)
                                         } else {
                                             // Handle the error, e.g., show a toast or log the error
-                                            Log.e("IncomeCategoryAdapter", "Error: ${response.message()}")
+                                            Log.e("ExpensesCategoryAdapter", "Error: ${response.message()}")
                                         }
                                     }
                                 } catch (e: Exception) {
                                     // Handle error, e.g., show a toast or log the error
-                                    Log.e("IncomeCategoryAdapter", "Error: ${e.message}", e)
+                                    Log.e("ExpensesCategoryAdapter", "Error: ${e.message}", e)
                                 }
                             }
                         }
@@ -129,13 +127,11 @@ class IncomeCategoryAdapter(private val kategoriList: MutableList<ApiService.Kat
                     .show()
             }
         }
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_kategori, parent, false)
+            .inflate(R.layout.list_kategoriexp, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -143,14 +139,14 @@ class IncomeCategoryAdapter(private val kategoriList: MutableList<ApiService.Kat
         val currentKategori = kategoriList[position]
 
         // Tambahkan kondisi untuk memeriksa id_jenis
-        if (currentKategori.id_jenis == "1") {
-            holder.textViewItemIncome.text = currentKategori.nama
-            holder.textViewItemIncome.visibility = View.VISIBLE
+        if (currentKategori.id_jenis == "2") {
+            holder.textViewItemExpense.text = currentKategori.nama
+            holder.textViewItemExpense.visibility = View.VISIBLE
             holder.imageViewHapus.visibility = View.VISIBLE
             holder.imageViewEdit.visibility = View.VISIBLE
         } else {
             // Tampilkan teks lain atau kosong jika id_jenis tidak sesuai
-            holder.textViewItemIncome.visibility = View.GONE
+            holder.textViewItemExpense.visibility = View.GONE
             holder.imageViewHapus.visibility = View.GONE
             holder.imageViewEdit.visibility = View.GONE
         }
@@ -162,16 +158,14 @@ class IncomeCategoryAdapter(private val kategoriList: MutableList<ApiService.Kat
 
     // Add a function to update the dataset and sort by id_jenis
     fun updateDataset(newKategoriList: List<ApiService.Kategori>) {
-        // Remove items that are not id_jenis == "1"
-        kategoriList.removeAll { it.id_jenis != "1" }
+        // Remove items that are not id_jenis == "2" (adjust based on your requirements)
+        kategoriList.removeAll { it.id_jenis != "2" }
         // Add new items
 
         // Sort the list by id_jenis
-        kategoriList.sortWith(compareByDescending { it.id_jenis == "1" })
+        kategoriList.sortWith(compareByDescending { it.id_jenis == "2" })
 
         // Notify data set changed
         notifyDataSetChanged()
     }
 }
-
-
