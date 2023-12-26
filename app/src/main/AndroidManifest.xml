@@ -43,6 +43,9 @@
             android:name=".ExpensesCategoryActivity"
             android:exported="false" />
         <activity
+            android:name=".AssetActivity"
+            android:exported="false" />
+        <activity
             android:name=".IncomeCategoryActivity"
             android:exported="false" />
         <activity
