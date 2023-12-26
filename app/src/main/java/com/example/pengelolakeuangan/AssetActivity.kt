@@ -1,6 +1,5 @@
 package com.example.pengelolakeuangan
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,5 +12,8 @@ class AssetActivity : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        val view = inflater.inflate(R.layout.fragment_daily_list, container, false)
+
+        return view
     }
+}
