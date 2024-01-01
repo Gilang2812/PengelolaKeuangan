@@ -53,7 +53,6 @@ interface ApiService {
         @Header("Authorization") authorization: String
     ): Response<Kategori>
 
-
     @GET("katpemasukan")
     suspend fun getPemasukanKategori(@Header("Authorization") authorization: String) : List<KategoriPemasukan>
     @GET("katpemasukan")
@@ -87,4 +86,6 @@ interface ApiService {
         @Header("Authorization") authorization: String
     ): Call<DeleteTransaksiResponse>
 
+    @GET("anggaran")
+    suspend fun getAnggaran(@Header("Authorization") authorization: String): List<Anggaran>
 }
