@@ -88,4 +88,18 @@ interface ApiService {
 
     @GET("anggaran")
     suspend fun getAnggaran(@Header("Authorization") authorization: String): List<Anggaran>
+
+    @POST("anggaran")
+    suspend fun tambahAnggaran(
+        @Header("Authorization") authorization: String,
+        @Body request: AnggaranRequest
+    ): AnggaranResponse
+
+    @PUT("anggaran/{idAnggaran}")
+    suspend fun updateAnggaran(
+        @Path("idAnggaran") idAnggaran: String,
+        @Header("Authorization") authorization: String,
+        @Body request: AnggaranRequest
+    ): Response<UpdateAnggaranResponse>
+
 }

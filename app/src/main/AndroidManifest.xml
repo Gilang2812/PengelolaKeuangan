@@ -16,6 +16,12 @@
         android:theme="@style/Theme.PengelolaKeuangan"
         tools:targetApi="31">
         <activity
+            android:name=".EditAnggaran"
+            android:exported="false" />
+        <activity
+            android:name=".TambahAnggaran"
+            android:exported="false" />
+        <activity
             android:name=".EditPengeluaranActivity"
             android:exported="false" />
         <activity

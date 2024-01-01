@@ -1,0 +1,71 @@
+<!-- res/layout/activity_add_expense.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".EditAnggaran"
+    android:orientation="vertical">
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/headerAsset"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#E9DCFE">
+
+        <ImageView
+            android:id="@+id/edit_bckinc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back"
+            android:onClick="onBackPressed"
+            android:outlineAmbientShadowColor="@color/black"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:src="@drawable/ic_back"
+            tools:ignore="TouchTargetSizeCheck,ImageContrastCheck"
+            app:tint="@android:color/black"
+            tools:targetApi="p" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tambah_anggaran"
+            android:textSize="20sp"
+            android:fontFamily="@font/poppinsmedium"/>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+    <EditText
+        android:id="@+id/editNominal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="184dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/nominal"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editNama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+          android:hint="@string/misal_konsumsi_tranportasi"
+        android:inputType="textAutoComplete"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/EditAnggaran"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editNama"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="105dp"
+        android:onClick="updateAnggaran"
+        android:text="Simpan" />
+    </LinearLayout>
+</LinearLayout>

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pengelolakeuangan.MainActivity
+import com.example.pengelolakeuangan.EditAnggaran
 import com.example.pengelolakeuangan.R
 import com.google.gson.annotations.SerializedName
 import java.util.*
@@ -29,11 +29,11 @@ class AnggaranAdapter(private var listAnggaran: List<Anggaran>) : RecyclerView.A
 
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
-            val intent = Intent(context, MainActivity::class.java)
+            val intent = Intent(context, EditAnggaran::class.java)
 
             intent.putExtra("idAnggaran", anggaran.idAnggaran)
             intent.putExtra("nama", anggaran.nama)
-            intent.putExtra("nilai", anggaran.nilai)
+            intent.putExtra("nilai", anggaran.nilai.toString())
 
             context.startActivity(intent)
         }
@@ -49,7 +49,7 @@ class AnggaranAdapter(private var listAnggaran: List<Anggaran>) : RecyclerView.A
         private val nilaiTextView: TextView = itemView.findViewById(R.id.jumlah)
 
         fun bind(anggaran: Anggaran) {
-            nomor.text = (adapterPosition + 1).toString()
+            nomor.text = (bindingAdapterPosition + 1).toString()
             namaTextView.text = anggaran.nama
             nilaiTextView.text = anggaran.nilai.toString()
         }
@@ -67,4 +67,26 @@ data class Anggaran(
     val createdAt: String,
     @SerializedName("updated_at")
     val updatedAt: String
+)
+data class AnggaranRequest(
+    val nama: String,
+    val nilai: Int
+)
+data class UpdateAnggaranResponse(
+    val success: String,
+    val anggaran: AnggaranData
+)
+
+data class AnggaranResponse(
+    val data: AnggaranData,
+    val success: String
+)
+
+data class AnggaranData(
+    val created_at: String,
+    val updated_at: String,
+    val id_anggaran: String,
+    val id_user: String,
+    val nama: String,
+    val nilai: Int
 )

@@ -72,4 +72,8 @@
     <string name="category">Category</string>
     <string name="hapus">hapus</string>
     <string name="simpan">simpan</string>
+    <string name="misal_konsumsi_tranportasi">misal , konsumsi, tranportasi</string>
+    <string name="tambah">Tambah</string>
+    <string name="nominal">nominal</string>
+    <string name="tambah_anggaran">Tambah Anggaran</string>
 </resources>
