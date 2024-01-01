@@ -62,6 +62,12 @@ interface ApiService {
     @GET("aset")
     suspend fun getAset(@Header("Authorization") authorization: String) : List<Aset>
 
+    @POST("aset")
+    suspend fun createAset(@Body aset: Aset, @Header("Authorization") authorization: String): Response<Aset>
+
+
+
+
     @POST("transaksi")
     fun postTransaksi(@Body request: TransaksiRequest, @Header("Authorization") authorization: String): Call<TransaksiResponse>
 
