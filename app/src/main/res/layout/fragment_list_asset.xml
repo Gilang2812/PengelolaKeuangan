@@ -6,16 +6,6 @@
     android:orientation="horizontal"
     android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/hapus"
-        android:layout_width="50sp"
-        android:layout_height="25dp"
-        android:contentDescription="@string/delete"
-        android:onClick="onBackPressed"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:src="@drawable/kurangi" />
-
     <TextView
         android:id="@+id/textViewAsset"
         android:layout_width="0dp"
@@ -27,15 +17,5 @@
         android:textColor="@android:color/black"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"/>
-
-    <ImageView
-        android:id="@+id/edit"
-        android:layout_width="50sp"
-        android:layout_height="25dp"
-        android:contentDescription="@string/delete"
-        android:onClick="onBackPressed"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:src="@drawable/pena" />
 
 </LinearLayout>

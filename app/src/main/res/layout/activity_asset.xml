@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
+    tools:context=".AssetActivity2">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/headerAsset"
@@ -37,16 +37,16 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listAsset"
+        android:id="@+id/listAset"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/fragment_list_asset"
+        tools:listitem="@layout/item_asset"
         android:layout_below="@id/headerAsset"
         android:orientation="vertical"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/tambahinc"
+        android:id="@+id/tambahaset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

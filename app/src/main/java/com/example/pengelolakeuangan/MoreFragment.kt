@@ -40,7 +40,7 @@ class MoreFragment : Fragment() {
                     startActivity(intent)
                 }
                 1 -> {
-                    val intent = Intent(activity, AssetActivity::class.java)
+                    val intent = Intent(activity, AssetActivity2::class.java)
                     startActivity(intent)
                     // Handle Menu 2 click (Asset)
                     // Implement handling for Asset click if needed
