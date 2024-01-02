@@ -7,23 +7,20 @@
     android:orientation="vertical">
 
     <!-- Placeholder TextView, bisa dihapus jika tidak diperlukan -->
-    <TextView
-        android:id="@+id/hello_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment" />
+
 
     <!-- Button untuk logout -->
     <Button
         android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
+        android:layout_marginTop="250dp"
         android:text="@string/logout" />
 
     <Button
         android:id="@+id/location"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:text="@string/location" />

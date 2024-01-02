@@ -32,7 +32,7 @@
                 android:id="@+id/jenis"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@id/tanggal"
                 android:text="pemasukan"
