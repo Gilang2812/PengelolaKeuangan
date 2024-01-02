@@ -5,29 +5,35 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.view.View
+import android.widget.AutoCompleteTextView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 
+class LocationActivity : AppCompatActivity() {
 
-class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
-    private lateinit var mMap: GoogleMap
     private val MY_PERMISSIONS_REQUEST_LOCATION = 1
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var latitudeTextView: TextView
+    private lateinit var longitudeTextView: TextView
+    private lateinit var latitudeAutoCompleteTextView: AutoCompleteTextView
+    private lateinit var longitudeAutoCompleteTextView: AutoCompleteTextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location)
 
+        // Inisialisasi variabel
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        latitudeTextView = findViewById(R.id.latitude)
+        longitudeTextView = findViewById(R.id.longitude)
+        latitudeAutoCompleteTextView = findViewById(R.id.textlatitude)
+        longitudeAutoCompleteTextView = findViewById(R.id.textlongitude)
 
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -44,21 +50,8 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
                 MY_PERMISSIONS_REQUEST_LOCATION
             )
         }
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
-        mapFragment.getMapAsync(this)
     }
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
 
-        // Mendapatkan lokasi pengguna (contoh: Jakarta, Indonesia)
-        val userLocation = LatLng(-6.2088, 106.8456)
-
-        // Menambahkan marker pada lokasi pengguna
-        mMap.addMarker(MarkerOptions().position(userLocation).title("Lokasi Pengguna"))
-
-        // Menggerakkan kamera ke lokasi pengguna dan memberikan zoom
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 12f))
-    }
 
     private fun getLastLocation() {
         if (ActivityCompat.checkSelfPermission(
@@ -69,8 +62,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
+            // Handling permisson not granted
             return
         }
         fusedLocationClient.lastLocation
@@ -78,10 +70,18 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (location != null) {
                     val latitude = location.latitude
                     val longitude = location.longitude
-                    // Gunakan data lokasi di sini (contoh: tampilkan dalam Log)
-                    println("Latitude: $latitude, Longitude: $longitude")
+
+                    // Gunakan data lokasi di sini
+
+
+                    // Set teks pada AutoCompleteTextView
+                    latitudeAutoCompleteTextView.setText(latitude.toString())
+                    longitudeAutoCompleteTextView.setText(longitude.toString())
                 }
             }
+    }
+    fun onBackPressed(view: View) {
+        finish()
     }
 
     override fun onRequestPermissionsResult(
