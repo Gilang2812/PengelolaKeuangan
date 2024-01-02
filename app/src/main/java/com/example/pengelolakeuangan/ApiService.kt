@@ -61,6 +61,13 @@ interface ApiService {
     suspend fun getPengeluaranKategori(@Header("Authorization") authorization: String) : List<KatPengeluaran>
     @GET("aset")
     suspend fun getAset(@Header("Authorization") authorization: String) : List<Aset>
+    // Add this method to the ApiService interface
+    @PUT("aset/{id_aset}")
+    suspend fun updateAset(
+        @Path("id_aset") idAset: String,
+        @Body aset: Aset,
+        @Header("Authorization") authorization: String
+    ): Response<Aset>
 
     @POST("aset")
     suspend fun createAset(@Body aset: Aset, @Header("Authorization") authorization: String): Response<Aset>

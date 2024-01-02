@@ -63,6 +63,7 @@ class AssetActivity2 : AppCompatActivity() {
         }
     }
 
+
     private fun handleTambahAsetDialog() {
         val view = layoutInflater.inflate(R.layout.activity_tambahaset, null)
         val namaAsetEdit = view.findViewById<EditText>(R.id.namaAsetEdit)
