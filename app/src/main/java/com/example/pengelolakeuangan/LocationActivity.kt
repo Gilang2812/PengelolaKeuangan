@@ -10,9 +10,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
-class LocationActivity : AppCompatActivity() {
 
+class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
+    private lateinit var mMap: GoogleMap
     private val MY_PERMISSIONS_REQUEST_LOCATION = 1
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -37,6 +44,20 @@ class LocationActivity : AppCompatActivity() {
                 MY_PERMISSIONS_REQUEST_LOCATION
             )
         }
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+
+        // Mendapatkan lokasi pengguna (contoh: Jakarta, Indonesia)
+        val userLocation = LatLng(-6.2088, 106.8456)
+
+        // Menambahkan marker pada lokasi pengguna
+        mMap.addMarker(MarkerOptions().position(userLocation).title("Lokasi Pengguna"))
+
+        // Menggerakkan kamera ke lokasi pengguna dan memberikan zoom
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 12f))
     }
 
     private fun getLastLocation() {
@@ -50,11 +71,6 @@ class LocationActivity : AppCompatActivity() {
         ) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         fusedLocationClient.lastLocation

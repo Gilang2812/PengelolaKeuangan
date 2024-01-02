@@ -76,4 +76,6 @@
     <string name="tambah">Tambah</string>
     <string name="nominal">nominal</string>
     <string name="tambah_anggaran">Tambah Anggaran</string>
+    <string name="logout">Logout</string>
+    <string name="location">location</string>
 </resources>

@@ -19,11 +19,15 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
+        val btnLocation = view.findViewById<Button>(R.id.location)
 
         btnLogout.setOnClickListener {
             logout()
         }
 
+        btnLocation.setOnClickListener {
+            location(it) // Pass the view as an argument
+        }
         return view
     }
 
@@ -38,6 +42,12 @@ class ProfileFragment : Fragment() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         requireActivity().finish()
+    }
+
+
+    fun location(view: View) {
+        val intent = Intent(requireContext(), LocationActivity::class.java)
+        startActivity(intent)
     }
 
 }
